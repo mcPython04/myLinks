@@ -1,9 +1,9 @@
-{% if latest_question_list %}
-<ul>
-    {% for question in latest_question_list %}
-    <li><a href="{{ links.hyperlink }}/">{{ links.website_name }}</a></li>
-    {% endfor %}
-</ul>
+{% if link_list %}
+    <ul>
+        {% for link in link_list %}
+        <li><a href="{{ link.hyperlink }}">{{ link.website_name }}</a></li>
+        {% endfor %}
+    </ul>
 {% else %}
 <p>No links are available.</p>
 {% endif %}
