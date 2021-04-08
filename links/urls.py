@@ -1,8 +1,15 @@
 from django.urls import path
 from . import views
+from django.conf.urls import include, url
+from links.views import dashboard, home
+
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    #path('links/<int:link_id>/upload/', views.image_upload_view),
-    path('links/add/', views.add_view),
+    #path('index/', views.index_view, name='index'),
+    #path('add/', views.add_view, name='add'),
+    path('accounts/', include('django_registration.backends.activation.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('',home,name="home"),
+    path('dashboard/',dashboard,name="dashboard"),
+
 ]   

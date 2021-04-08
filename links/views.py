@@ -6,7 +6,7 @@ from django.http import HttpResponse
 
 
 
-def index(request):
+def index_view(request):
     link_list = link.objects.all()
     context = {'link_list' : link_list}
     return render(request, 'links/index.html', context)
@@ -25,3 +25,10 @@ def add_view(request):
     else:
         form = ImageForm()
     return render(request, 'links/add.html', {'form': form,'link_list' : link_list})
+
+
+def dashboard(request):
+    return render(request, "links/dashboard.html")
+
+def home(request):
+    return render(request, "home.html")

@@ -1,10 +1,11 @@
+<br />
 {% if link_list %}
-    <ul>
-        {% for link in link_list %}
-        <a href="{{ link.hyperlink }}">{{ link.website_name }}</a>
-        {% endfor %}
-    </ul>
+<ul>
+    {% for link in link_list %}
+    <a href="{{ link.hyperlink }}">{{ link.website_name }}</a>
+    {% endfor %}
+
+</ul>
 {% else %}
 <p>No links are available.</p>
 {% endif %}
-
