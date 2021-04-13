@@ -32,13 +32,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'links.apps.LinksConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+ #   'django_registration',
+    'links.apps.LinksConfig',
 ]
 
 MIDDLEWARE = [
@@ -124,8 +125,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = "dashboard"
+LOGIN_REDIRECT_URL = "base"
 
-LOGOUT_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "base"
 
 ACCOUNT_ACTIVATION_DAYS = 7

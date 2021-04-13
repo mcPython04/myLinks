@@ -7,9 +7,9 @@ from django.http import HttpResponse
 
 
 def index_view(request):
-    link_list = link.objects.all()
-    context = {'link_list' : link_list}
-    return render(request, 'links/index.html', context)
+    #link_list = link.objects.all()
+    #context = {'link_list' : link_list}
+    return render(request, 'index.html')
     
 
 def add_view(request): 
@@ -30,5 +30,5 @@ def add_view(request):
 def dashboard(request):
     return render(request, "links/dashboard.html")
 
-def home(request):
-    return render(request, "home.html")
+def base(request):
+    return render(request, "base.html")
