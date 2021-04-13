@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{{ user.username }}'s {% trans "Home Page" %}
+<br>
+<br>
+<!--ADD LINKS BUTTON-->
+Add Links
+{% endif %}
+
+
+{% endblock %}
