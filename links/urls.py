@@ -5,7 +5,7 @@ from links.views import base
 from django.contrib import admin
 
 urlpatterns = [
-    path('home/', views.home, name='home'),
+    path('home/<str:username>', views.home, name='home'),
     #path('add/', views.add_view, name='add'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),

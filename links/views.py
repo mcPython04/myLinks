@@ -4,10 +4,11 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
+from .models import *
+from django.contrib.auth.models import User
 
-
-
-def home(request):
+def home(request, username):
+    user = User.objects.get(username=username)
     return render(request, 'home.html')
     
 
