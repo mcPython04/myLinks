@@ -6,7 +6,7 @@ from django.contrib import admin
 
 urlpatterns = [
     path('home/<str:username>', views.home, name='home'),
-    #path('add/', views.add_view, name='add'),
+    path('add/', views.add_view, name='add'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('',base,name="base"),
