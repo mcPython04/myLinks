@@ -6,11 +6,18 @@ from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from .models import *
 from django.contrib.auth.models import User
+from django.template import loader
 
 def home(request, username):
-    #user = User.objects.get(username=username)
     return render(request, 'home.html')
     
+def user_page(request,username):
+    link_list = link.objects.all()
+    template = loader.get_template('user_page.html')
+    context = {
+        'link_list' : link_list,'username' : username
+    }
+    return HttpResponse(template.render(context, request))   
 
 def add_view(request): 
     """Process images uploaded by users"""
