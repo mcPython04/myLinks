@@ -11,12 +11,12 @@
     {% block header %}
     {% if user.is_authenticated %}
         
-        <a href="{% url 'home' user.username %}">{% trans "Home" %}</a>
+        <a href="{% url 'home' %}">{% trans "Home" %}</a>
         (<a href="{% url 'logout' %}">{% trans "Log out" %}</a> | 
         <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>)
         
         {% if user.is_superuser %}
-        <a href="{% url 'admin:index' %}">link to admin panel</a>
+        <a href="{% url 'admin:index' %}">admin panel</a>
         {% endif %}
         <br>
         {% trans "Logged in" %}: {{ user.username }} 
