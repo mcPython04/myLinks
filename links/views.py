@@ -33,3 +33,7 @@ def userPage(request,username):
 
 def base(request):
     return render(request, "base.html")
+
+class LinkCreateView(CreateView):
+    model = link
+    fields = ['hyperlink','website_name']

@@ -10,5 +10,6 @@ class link(models.Model):
     image = models.ImageField(upload_to='images')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     default = models.BooleanField(default=False)
+    enabled = models.BooleanField(default=False)
     def __str__(self):
         return self.website_name
