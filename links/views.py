@@ -52,10 +52,14 @@ def linkDefaultSetView(request):
             else:
                 d_link.update(default=False)
         elif request.POST['type'] == "Enable":
+            link_list = link.objects.filter(user__username=request.user.username, enabled=True)
+            #if link_list.count() < 6:
             if d_set == "Set":
                 d_link.update(enabled=True)
             else:
                 d_link.update(enabled=False)
+            #else:
+                #return redirect('home')
         return redirect('home')
     else:
         raise Http404("Something went wrong.")
