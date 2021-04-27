@@ -2,8 +2,9 @@ from django import forms
 from .models import link
 
 
-class ImageForm(forms.ModelForm):
-    """Form for the image model"""
-    class Meta:
-        model = link
-        fields = ('image',)
+class CreateLinkForm(forms.Form):
+    hyperlink = forms.URLField()
+    website_name = forms.CharField()
+    #image = forms.ImageField()
+    def end_form(self):
+        pass

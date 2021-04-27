@@ -2,9 +2,10 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, render
 from .models import *
+from .forms import *
 from django.contrib.auth.models import User
 from django.template import loader
-from django.views.generic.edit import DeleteView, CreateView, UpdateView
+from django.views.generic.edit import FormView, DeleteView, CreateView, UpdateView
 from django.urls import reverse_lazy
 def home(request):
     #return render(request, 'home.html')
@@ -37,3 +38,7 @@ def base(request):
 class LinkCreateView(CreateView):
     model = link
     fields = ['hyperlink','website_name']
+    success_url = '../../home'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(LinkCreateView, self).form_valid(form)
