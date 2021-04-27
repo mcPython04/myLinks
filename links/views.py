@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.template import loader
 from django.views.generic.edit import FormView, DeleteView, CreateView, UpdateView
 from django.urls import reverse_lazy
+
 def home(request):
     #return render(request, 'home.html')
     template = loader.get_template('home.html')
@@ -34,7 +35,30 @@ def userPage(request,username):
 
 def base(request):
     return render(request, "base.html")
-
+def linkDefaultSetView(request):
+    if request.method == "POST":
+        link_list = link.objects.filter(user__username=request.user.username)
+        d_id = request.POST['d_id']
+        d_set = request.POST['set']
+        d_id=int(d_id)
+        d_link = link.objects.filter(id=d_id)
+        if request.POST['type'] == "Default":
+            d_link = link_list.filter(default=True)
+            if d_link.exists():
+                d_link.update(default=False) 
+            d_link = link.objects.filter(id=d_id)
+            if d_set == "Set":
+                d_link.update(default=True)
+            else:
+                d_link.update(default=False)
+        elif request.POST['type'] == "Enable":
+            if d_set == "Set":
+                d_link.update(enabled=True)
+            else:
+                d_link.update(enabled=False)
+        return redirect('home')
+    else:
+        raise Http404("Something went wrong.")
 class LinkCreateView(CreateView):
     model = link
     fields = ['hyperlink','website_name']
@@ -48,3 +72,11 @@ class LinkDeleteView(DeleteView):
     model = link
     success_url = '../../home'
     template_name = 'links/delete.html'
+
+#class LinkUpdateView(UpdateView):
+#    model = link
+#    fields = ['enabled', 'default']
+#    template_name = 'links/update.html'
+#    success_url = '../../home'
+
+
