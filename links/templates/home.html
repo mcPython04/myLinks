@@ -10,7 +10,7 @@ Links:
     {% if link_list %}
         <ul>
         {% for link in link_list %}
-            <li><a href={{link.hyperlink}}>{{link.website_name}}</a> | <a href="{% url 'home'%}" >{% trans "Remove Link" %}</a> | <a href="{% url 'home'%}" >{% trans "Change Image" %}</a> | 
+            <li><a href={{link.hyperlink}}>{{link.website_name}}</a> | <a href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a> | <a href="{% url 'home'%}" >{% trans "Change Image" %}</a> | 
             {% if link.default %}
                 <a href="{% url 'home'%}" > {% trans "Remove Default" %}</a>
             {% else %}
@@ -23,14 +23,14 @@ Links:
                 <a href="{% url 'home'%}" > {% trans "Enable" %}</a></li>
             {% endif %}
         {% endfor %}
-        <li><a href="{% url 'createLink'%}" >{% trans "Add Link" %}</a></li>
+        
         </ul>
     {% else %}
         {% trans "No links" %}
         <br>
         <br>
-        <li><a href="{% url 'home'%}" >{% trans "Add Link" %}</a></li>
     {% endif %}
+    <li><a href="{% url 'createLink'%}" >{% trans "Add Link" %}</a></li>
 <br>
 {% endif %}
 {% endblock %}

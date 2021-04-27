@@ -39,6 +39,12 @@ class LinkCreateView(CreateView):
     model = link
     fields = ['hyperlink','website_name']
     success_url = '../../home'
+    template_name = 'links/create.html'
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(LinkCreateView, self).form_valid(form)
+
+class LinkDeleteView(DeleteView):
+    model = link
+    success_url = '../../home'
+    template_name = 'links/delete.html'
