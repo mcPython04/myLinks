@@ -10,8 +10,9 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('',base,name="base"),
     path('<str:username>', views.userPage,name="userPage"),
-    path('links/default', views.linkDefaultSetView, name='setDefaultLink'),
+    path('links/update', views.linkUpdateView, name='updateLink'),
     path('links/create', views.LinkCreateView.as_view(), name='createLink'),
+    path('links/create_collection', views.CollectionCreateView.as_view(), name='createCollection'),
     path('links/delete/<slug:pk>', views.LinkDeleteView.as_view(), name='deleteLink'),
-    #path('links/update/<slug:pk>', views.LinkUpdateView.as_view(), name='updateLink'),
+    path('links/upload/<slug:pk>', views.LinkUploadView.as_view(), name='uploadLink'),
 ]   

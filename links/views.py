@@ -11,9 +11,10 @@ from django.urls import reverse_lazy
 def home(request):
     #return render(request, 'home.html')
     template = loader.get_template('home.html')
+    collection_list = collection.objects.filter(user__username=request.user.username)
     link_list = link.objects.filter(user__username=request.user.username)
     context = {
-            'link_list' : link_list
+            'link_list' : link_list, 'collection_list' : collection_list
         }
     return HttpResponse(template.render(context, request))
     
@@ -35,7 +36,7 @@ def userPage(request,username):
 
 def base(request):
     return render(request, "base.html")
-def linkDefaultSetView(request):
+def linkUpdateView(request):
     if request.method == "POST":
         link_list = link.objects.filter(user__username=request.user.username)
         d_id = request.POST['d_id']
@@ -53,19 +54,16 @@ def linkDefaultSetView(request):
                 d_link.update(default=False)
         elif request.POST['type'] == "Enable":
             link_list = link.objects.filter(user__username=request.user.username, enabled=True)
-            #if link_list.count() < 6:
             if d_set == "Set":
                 d_link.update(enabled=True)
             else:
                 d_link.update(enabled=False)
-            #else:
-                #return redirect('home')
         return redirect('home')
     else:
         raise Http404("Something went wrong.")
 class LinkCreateView(CreateView):
     model = link
-    fields = ['hyperlink','website_name']
+    fields = ['hyperlink','website_name','image']
     success_url = '../../home'
     template_name = 'links/create.html'
     def form_valid(self, form):
@@ -77,10 +75,20 @@ class LinkDeleteView(DeleteView):
     success_url = '../../home'
     template_name = 'links/delete.html'
 
-#class LinkUpdateView(UpdateView):
-#    model = link
-#    fields = ['enabled', 'default']
-#    template_name = 'links/update.html'
-#    success_url = '../../home'
+class LinkUploadView(UpdateView):
+    model = link
+    fields = ['image']
+    template_name = 'links/image.html'
+    success_url = '../../home'
 
 
+class CollectionCreateView(CreateView):
+    model = collection
+    #TODO
+    #ADD LINKS
+    fields = ['name']
+    success_url = '../../home'
+    template_name = 'links/create.html'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CollectionCreateView, self).form_valid(form)
