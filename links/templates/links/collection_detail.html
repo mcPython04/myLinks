@@ -9,6 +9,10 @@
         {% for link in collection.links.all%}
             <li><a href={{link.hyperlink}}>{{link.website_name}}</a>
              |
+            <form action="{% url 'deleteLink' link.id %} " method ="post">
+                {% csrf_token %}
+                <input type="submit" name="button" value="Remove Link">
+            </form>
             <a href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
             |
             <a href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>

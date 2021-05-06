@@ -140,3 +140,10 @@ class CollectionDeleteView(DeleteView):
     success_url = '../../../home'
     template_name = 'links/delete_collection.html'
 
+
+#def collection_link_delete_view(request, pk):
+
+
+
+
+
