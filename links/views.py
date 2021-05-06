@@ -132,3 +132,10 @@ class CollectionCreateView(CreateView):
 class CollectionDetailView(DetailView):
     model = collection
     template_name = 'links/collection_detail.html'
+
+
+class CollectionDeleteView(DeleteView):
+    model = collection
+    success_url = '../../../home'
+    template_name = 'links/delete_collection.html'
+
