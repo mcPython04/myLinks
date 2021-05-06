@@ -8,6 +8,7 @@ from django.template import loader
 from django.views.generic.edit import FormView, DeleteView, CreateView, UpdateView, BaseDetailView
 from django.views.generic import DetailView
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 
 def home(request):
@@ -34,6 +35,21 @@ def userPage(request, username):
                 'link_list' : link_list,'username' : username
             }
             return HttpResponse(template.render(context, request))
+    else:
+        raise Http404("No Such User Exists.")
+
+
+def collectionPage(request, username, collection_name):
+    if User.objects.filter(username=username).exists():
+        if collection.objects.filter(user__username=username, name=collection_name).exists():
+            collection1 = collection.objects.get(user__username=username, name=collection_name)
+            template = loader.get_template('collection_page.html')
+            context = {
+                'collection': collection1, 'username': username, 'collection_name': collection_name
+            }
+            return HttpResponse(template.render(context, request))
+        else:
+            raise Http404("No Such Collection Exists.")
     else:
         raise Http404("No Such User Exists.")
 
