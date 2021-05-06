@@ -134,6 +134,7 @@ class CollectionDetailView(DetailView):
     template_name = 'links/collection_detail.html'
 
 
+# Collection delete view
 class CollectionDeleteView(DeleteView):
     model = collection
     success_url = '../../../home'
