@@ -18,7 +18,7 @@ urlpatterns = [
     path('links/upload/<slug:pk>', views.LinkUploadView.as_view(), name='uploadLink'),
     path('links/collection/<slug:pk>', views.CollectionDetailView.as_view(), name='detailCollection'),
     path('links/collection/delete/<slug:pk>', views.CollectionDeleteView.as_view(), name='deleteCollection'),
-    #path('collection/links/remove', views.collection_link_delete_view, name='removeLink'),
+    path('collection/links/remove/<slug:pk>', views.collection_link_delete_view, name='removeLink'),
     path('<str:username>/<str:collection_name>', views.collectionPage, name="collectionPage"),
 
 ]

@@ -1,5 +1,5 @@
 #from .forms import ImageForm
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from .models import *
 from .forms import *
@@ -141,7 +141,11 @@ class CollectionDeleteView(DeleteView):
     template_name = 'links/delete_collection.html'
 
 
-#def collection_link_delete_view(request, pk):
+def collection_link_delete_view(request, pk):
+
+    link1 = get_object_or_404(link, id=request.POST.get('link_id'))
+    link1.collection_set.remove(pk)
+    return HttpResponseRedirect(reverse('detailCollection', args=[str(pk)]))
 
 
 
