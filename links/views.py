@@ -41,7 +41,7 @@ def userPage(request, username):
 def base(request):
     return render(request, "base.html")
 
-
+#comment
 def linkUpdateView(request):
     if request.method == "POST":
         link_list = link.objects.filter(user__username=request.user.username)
