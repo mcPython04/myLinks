@@ -41,7 +41,8 @@ def userPage(request, username):
 def base(request):
     return render(request, "base.html")
 
-#comment
+
+# comment
 def linkUpdateView(request):
     if request.method == "POST":
         link_list = link.objects.filter(user__username=request.user.username)
@@ -93,18 +94,15 @@ class LinkUploadView(UpdateView):
     success_url = '../../home'
 
 
+# View to create collections
 class CollectionCreateView(CreateView):
     model = collection
-    #TODO
-    #ADD LINKS
     form_class = CreateCollectionForm
     success_url = '../../home'
     template_name = 'links/create_collection.html'
 
+    # Passes the request object to the form class; necessary to display links that only belongs to the user
     def get_form_kwargs(self):
-        """ Passes the request object to the form class.
-         This is necessary to only display members that belong to a given user"""
-
         kwargs = super(CollectionCreateView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
