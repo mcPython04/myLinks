@@ -19,6 +19,7 @@ urlpatterns = [
     path('links/collection/<slug:pk>', views.CollectionDetailView.as_view(), name='detailCollection'),
     path('links/collection/delete/<slug:pk>', views.CollectionDeleteView.as_view(), name='deleteCollection'),
     path('collection/links/remove/<slug:pk>', views.collection_link_delete_view, name='removeLink'),
+    path('collection/links/update/<slug:pk>', views.CollectionUpdateView.as_view(), name='updateCollection'),
     path('<str:username>/<str:collection_name>', views.collectionPage, name="collectionPage"),
 
 ]

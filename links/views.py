@@ -141,6 +141,18 @@ class CollectionDeleteView(DeleteView):
     template_name = 'links/delete_collection.html'
 
 
+class CollectionUpdateView(UpdateView):
+    model = collection
+    form_class = UpdateCollectionForm
+    template_name = 'links/update_collection.html'
+    success_url = '../../../home'
+
+    # Passes the request object to the form class; necessary to display links that only belongs to the user
+    def get_form_kwargs(self):
+        kwargs = super(CollectionUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 def collection_link_delete_view(request, pk):
 
     link1 = get_object_or_404(link, id=request.POST.get('link_id'))

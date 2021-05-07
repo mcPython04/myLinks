@@ -8,47 +8,10 @@
         <ul>
         {% for link in collection.links.all%}
             <li><a href={{link.hyperlink}}>{{link.website_name}}</a>
-             |
-            <form action="{% url 'removeLink' collection.id %} " method ="post">
+                <form action="{% url 'removeLink' collection.id %} " method ="post">
                 {% csrf_token %}
                 <button type="submit", name="link_id", value="{{ link.id }}">Remove Link</button>
             </form>
-            |
-            <a href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
-            {% if link.default %}
-                <form action="{% url 'updateLink' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" name="button" value="Remove Default">
-                    <input type="hidden" name="d_id" value={{link.id}}>
-                    <input type="hidden" name="set" value="Remove">
-                    <input type="hidden" name="type" value="Default">
-                </form>
-            {% else %}
-                <form action="{% url 'updateLink' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" name="button" value="Set Default">
-                    <input type="hidden" name="d_id" value={{link.id}}>
-                    <input type="hidden" name="set" value="Set">
-                    <input type="hidden" name="type" value="Default">
-                </form>
-            {% endif %}
-            {% if link.enabled %}
-            <form action="{% url 'updateLink' %}" method="post">
-                {% csrf_token %}
-                <input type="submit" name="button" value="Disable">
-                <input type="hidden" name="d_id" value={{link.id}}>
-                <input type="hidden" name="set" value="Disable">
-                <input type="hidden" name="type" value="Enable">
-            </form>
-            {% else %}
-            <form action="{% url 'updateLink' %}" method="post">
-                {% csrf_token %}
-                <input type="submit" name="button" value="Enable">
-                <input type="hidden" name="d_id" value={{link.id}}>
-                <input type="hidden" name="set" value="Set">
-                <input type="hidden" name="type" value="Enable">
-            </form>
-            {% endif %}
         {% endfor %}
 
         </ul>
@@ -58,6 +21,7 @@
         <br>
     {% endif %}
 
+    <a href="{% url 'updateCollection' collection.pk %}"><button type = "button">Update Collection</button></a>
     <a href="{% url 'deleteCollection' collection.pk %}"><button type = "button">Delete Collection</button></a>
 
 {% endblock %}
