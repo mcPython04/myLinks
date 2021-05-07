@@ -2,6 +2,12 @@
 {% load i18n %}
 
 {% block content %}
+
+<!-- If collection owner is the currently logged in user; display the page-->
+{% if user == collection.user %}
+
+
+<!-- Displays the detail(links) of the collection -->
 <h1>{{ collection.name }}</h1>
 
 {% if collection.links.all %}
@@ -21,7 +27,14 @@
         <br>
     {% endif %}
 
+    <!-- Click on links to update or delete collection -->
     <a href="{% url 'updateCollection' collection.pk %}"><button type = "button">Update Collection</button></a>
     <a href="{% url 'deleteCollection' collection.pk %}"><button type = "button">Delete Collection</button></a>
+
+<!-- If the collection owner is not the logged in user display this message -->
+{% else %}
+<strong>This is not your collection.</strong>
+
+{% endif %}
 
 {% endblock %}

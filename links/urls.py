@@ -1,9 +1,7 @@
 from django.urls import path
 from . import views
-from django.conf.urls import include, url
+from django.conf.urls import include
 from links.views import base
-from django.contrib import admin
-from .models import collection
 
 urlpatterns = [ 
     path('home', views.home, name='home'),
