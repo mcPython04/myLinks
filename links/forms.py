@@ -18,7 +18,8 @@ class CreateCollectionForm(forms.ModelForm):
     name = forms.CharField()
     links = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        queryset=None
+        required=False,
+        queryset=None,
     )
 
 
@@ -37,5 +38,6 @@ class UpdateCollectionForm(forms.ModelForm):
 
     links = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        queryset=None
+        required=False,
+        queryset=None,
     )

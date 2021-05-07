@@ -160,7 +160,6 @@ class CollectionUpdateView(UpdateView):
 
 
 def collection_link_delete_view(request, pk):
-
     link1 = get_object_or_404(link, id=request.POST.get('link_id'))
     link1.collection_set.remove(pk)
     return HttpResponseRedirect(reverse('detailCollection', args=[str(pk)]))
