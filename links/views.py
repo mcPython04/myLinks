@@ -9,6 +9,8 @@ from django.views.generic.edit import FormView, DeleteView, CreateView, UpdateVi
 from django.views.generic import DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.db import IntegrityError
 
 
 def home(request):
@@ -122,6 +124,16 @@ class CollectionCreateView(CreateView):
         kwargs = super(CollectionCreateView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+
+    # Catches error is user doesn't enter unique collection name
+    def post(self, request, *args, **kwargs):
+        try:
+            return super(CollectionCreateView, self).post(request, *args, **kwargs)
+        except IntegrityError:
+            messages.add_message(request, messages.ERROR,
+                                 'You already have registered a Collection with this name! ' + \
+                                 'All of your Collection names must be unique!')
+            return render(request, template_name=self.template_name, context=self.get_context_data())
 
     def form_valid(self, form):
         form.instance.user = self.request.user
