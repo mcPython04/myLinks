@@ -62,7 +62,7 @@ def test_link_create_view(client, create_test_user):
     client.force_login(user)
     lcv = LinkCreateView()
     form = lcv.get_form_class()
-    newphoto = SimpleUploadedFile(name='test_image.jpg', content=open('/home/ldoan/Downloads/background.jpg', 'rb').read(),
+    newphoto = SimpleUploadedFile(name='test_image.jpg', content=open('/home/mchen/Downloads/youtube.png', 'rb').read(),
                                   content_type='image/jpeg')
     form = form(data={'hyperlink': 'https://twitter.com/', 'website_name': 'Twitter', 'image': newphoto})
     req = client.post(reverse('createLink'), data=form.data)
@@ -70,3 +70,17 @@ def test_link_create_view(client, create_test_user):
     assert req.status_code == 302
     assert link.objects.count() == 1
 
+
+@pytest.mark.django_db
+def test_link_delete_view(client, create_test_link):
+    test_link = create_test_link
+    test_user = test_link.user
+    assert User.objects.count() == 1
+    assert link.objects.count() == 1
+    client.force_login(test_user)
+    resp = client.get(reverse('deleteLink', kwargs={'pk': 1}))
+    assert resp.status_code == 200
+    resp1 = client.post(reverse('deleteLink', kwargs={'pk': 1}))
+    assert resp1.status_code == 302
+    assert User.objects.count() == 1
+    assert link.objects.count() == 0
