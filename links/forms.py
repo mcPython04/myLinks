@@ -41,3 +41,28 @@ class UpdateCollectionForm(forms.ModelForm):
         required=False,
         queryset=None,
     )
+
+
+class UpdateLinkRemoveDefaultForm(forms.Form):
+    d_id = forms.IntegerField(widget=forms.HiddenInput())
+    set = forms.CharField(widget=forms.HiddenInput())
+    type = forms.CharField(widget=forms.HiddenInput())
+
+
+class UpdateLinkSetDefaultForm(forms.Form):
+    d_id = forms.IntegerField(widget=forms.HiddenInput())
+    set = forms.CharField(widget=forms.HiddenInput())
+    type = forms.CharField(widget=forms.HiddenInput())
+
+
+class UpdateLinkDisableForm(forms.Form):
+    d_id = forms.IntegerField(widget=forms.HiddenInput())
+    set = forms.CharField(widget=forms.HiddenInput())
+    type = forms.CharField(widget=forms.HiddenInput())
+
+
+class UpdateLinkEnableForm(forms.Form):
+    d_id = forms.IntegerField(widget=forms.HiddenInput())
+    set = forms.CharField(widget=forms.HiddenInput())
+    type = forms.CharField(widget=forms.HiddenInput())
+
