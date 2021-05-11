@@ -1,4 +1,5 @@
 #from .forms import ImageForm
+import requests
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from .models import *

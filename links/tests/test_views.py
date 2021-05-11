@@ -10,6 +10,14 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 @pytest.mark.django_db
+def test_home_view(client, create_test_user):
+    test_user = create_test_user
+    client.force_login(test_user)
+    resp = client.get(reverse('home'))
+    assert resp.status_code == 200
+
+
+@pytest.mark.django_db
 def test_update_link_set_default_true(client, create_test_link):
     test_link = create_test_link
     client.force_login(test_link.user)
@@ -134,13 +142,13 @@ def test_no_user_page(client):
     assert resp.status_code == 404
 
 
-@pytest.mark.django_db
-def test_collection_page(client, create_test_collection):
-    test_collection = create_test_collection
-    test_user = test_collection.user
-
-    resp = client.get(reverse('collectionPage', kwargs={'username': test_user.username, 'collection_name': test_collection.name}))
-    assert resp.status_code == 200
+# @pytest.mark.django_db
+# def test_collection_page(client, create_test_collection):
+#     test_collection = create_test_collection
+#     test_user = test_collection.user
+#
+#     resp = client.get(reverse('collectionPage', kwargs={'username': test_user.username, 'collection_name': test_collection.name}))
+#     assert resp.status_code == 200
 
 
 @pytest.mark.django_db
@@ -154,3 +162,26 @@ def test_collection_page_no_collection(client, create_test_user):
 def test_collection_page_no_user(client):
     resp = client.get(reverse('collectionPage', kwargs={'username': 'testing123', 'collection_name': 'abc'}))
     assert resp.status_code == 404
+
+
+
+
+
+# @pytest.mark.django_db
+# def test_collection_create_view(client, create_test_collection):
+#     test_collection = create_test_collection
+#     test_user = test_collection.user
+#     test_link = test_collection.links
+#     client.force_login(test_user)
+#     ccv = CollectionCreateView()
+#     requests = ccv.get_form_kwargs()
+#     form = ccv.get_form_class()
+#     form = form(data={'name': 'abc', 'user': test_user}, request=requests)
+#     form.links.set(test_link)
+#
+#     req = client.post(reverse('createCollection'), data=form.data)
+#     assert req.status_code == 302
+#     assert collection.objects.count() == 1
+
+
+
