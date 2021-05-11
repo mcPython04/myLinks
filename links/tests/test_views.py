@@ -55,7 +55,6 @@ def test_update_link_set_enable_true(client, create_test_link):
     assert test_link.enabled == True
 
 
-#django.forms.widgets.linkForm
 @pytest.mark.django_db
 def test_link_create_view(client, create_test_user):
     user = create_test_user
@@ -66,7 +65,6 @@ def test_link_create_view(client, create_test_user):
                                   content_type='image/jpeg')
     form = form(data={'hyperlink': 'https://twitter.com/', 'website_name': 'Twitter', 'image': newphoto})
     req = client.post(reverse('createLink'), data=form.data)
-    #import pdb;pdb.set_trace()
     assert req.status_code == 302
     assert link.objects.count() == 1
 
@@ -84,3 +82,18 @@ def test_link_delete_view(client, create_test_link):
     assert resp1.status_code == 302
     assert User.objects.count() == 1
     assert link.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_collection_detail_view(client, create_test_collection):
+    test_collection = create_test_collection
+    test_user = test_collection.user
+    assert User.objects.count() == 1
+    assert collection.objects.count() == 1
+    assert link.objects.count() == 1
+    client.force_login(test_user)
+    resp = client.get(reverse('detailCollection', kwargs={'pk': 1}))
+    assert resp.status_code == 200
+    assert User.objects.count() == 1
+    assert collection.objects.count() == 1
+    assert link.objects.count() == 1
