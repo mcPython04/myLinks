@@ -97,3 +97,25 @@ def test_collection_detail_view(client, create_test_collection):
     assert User.objects.count() == 1
     assert collection.objects.count() == 1
     assert link.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_collection_delete_view(client, create_test_collection):
+    test_collection = create_test_collection
+    test_user = test_collection.user
+    client.force_login(test_user)
+    resp = client.get(reverse('deleteCollection', kwargs={'pk': 1}))
+    assert resp.status_code == 200
+    resp1 = client.post(reverse('deleteCollection', kwargs={'pk': 1}))
+    assert resp1.status_code == 302
+    assert collection.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_collection_link_delete_view(client, create_test_collection):
+    test_collection = create_test_collection
+    test_user = test_collection.user
+    client.force_login(test_user)
+    resp = client.post(reverse('removeLink', kwargs={'pk': 1}), data={'link_id': test_collection.links.get(pk=1).id})
+    assert resp.status_code == 302
+    assert test_collection.links.all().count() == 0
