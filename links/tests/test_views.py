@@ -119,3 +119,38 @@ def test_collection_link_delete_view(client, create_test_collection):
     resp = client.post(reverse('removeLink', kwargs={'pk': 1}), data={'link_id': test_collection.links.get(pk=1).id})
     assert resp.status_code == 302
     assert test_collection.links.all().count() == 0
+
+
+@pytest.mark.django_db
+def test_user_page(client, create_test_user):
+    test_user = create_test_user
+    resp = client.get(reverse('userPage', kwargs={'username': test_user.username}))
+    assert resp.status_code == 200
+
+
+@pytest.mark.django_db
+def test_no_user_page(client):
+    resp = client.get(reverse('userPage', kwargs={'username': 'testing123'}))
+    assert resp.status_code == 404
+
+
+@pytest.mark.django_db
+def test_collection_page(client, create_test_collection):
+    test_collection = create_test_collection
+    test_user = test_collection.user
+
+    resp = client.get(reverse('collectionPage', kwargs={'username': test_user.username, 'collection_name': test_collection.name}))
+    assert resp.status_code == 200
+
+
+@pytest.mark.django_db
+def test_collection_page_no_collection(client, create_test_user):
+    test_user = create_test_user
+    resp = client.get(reverse('collectionPage', kwargs={'username': test_user.username, 'collection_name': 'abc'}))
+    assert resp.status_code == 404
+
+
+@pytest.mark.django_db
+def test_collection_page_no_user(client):
+    resp = client.get(reverse('collectionPage', kwargs={'username': 'testing123', 'collection_name': 'abc'}))
+    assert resp.status_code == 404

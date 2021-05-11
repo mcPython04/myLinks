@@ -15,6 +15,7 @@ def create_test_link():
     test_link = link.objects.create(hyperlink='https://twitter.com', website_name='Twitter', user=test_user)
     return test_link
 
+
 @pytest.fixture()
 def create_test_collection():
     test_user = User.objects.create_user('test_user3')
