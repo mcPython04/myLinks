@@ -195,4 +195,15 @@ def test_collection_update_view_remove_link(client, create_test_collection):
     assert test_collection.links.all().count() == 0
 
 
-
+@pytest.mark.django_db
+def test_link_upload_view(client, create_test_link_with_image):
+    test_link = create_test_link_with_image
+    test_user = test_link.user
+    client.force_login(test_user)
+    newphoto = SimpleUploadedFile(name='test_image.jpg',
+                                  content=open('links/tests/test_data/amazon.jpg', 'rb').read(),
+                                  content_type='image/jpeg')
+    req = client.post(reverse('uploadLink', kwargs={'pk': 1}), data={'image': newphoto})
+    assert req.status_code == 302
+    assert link.objects.count() == 1
+    assert User.objects.count() == 1

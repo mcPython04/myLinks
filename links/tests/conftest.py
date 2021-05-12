@@ -40,3 +40,17 @@ def create_test_links(create_test_user):
         return links
 
     return create_link
+
+
+@pytest.fixture
+def create_test_link_with_image(create_test_user):
+    test_user = create_test_user
+
+    newphoto = SimpleUploadedFile(name='test_image.jpg',
+                                      content=open('links/tests/test_data/background.jpg', 'rb').read(),
+                                      content_type='image/jpeg')
+    test_link = link.objects.create(hyperlink='https://twitter.com',
+                            website_name='Twitter',
+                            user=test_user,
+                            image=newphoto)
+    return test_link
