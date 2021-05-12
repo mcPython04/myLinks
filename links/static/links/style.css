@@ -1,0 +1,24 @@
+.links-grid {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    /* width: auto; */
+    margin: auto;
+    /* background-color: blue; */
+}
+
+.links-grid div {
+    /* background-color: red; */
+    margin: auto;
+    padding: 10px;
+}
+
+img {
+    border-radius: 25%;
+    transition: transform .2s;
+}
+
+img:hover {
+    -ms-transform: scale(1.2); /* IE 9 */
+    -webkit-transform: scale(1.2); /* Safari 3-8 */
+    transform: scale(1.2);
+}

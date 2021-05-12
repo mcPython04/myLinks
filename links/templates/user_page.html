@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
 {{username}} {% trans "'s Home Page" %}
 Links
 {% if link_list %}
-    <ul>
+    <div class="links-grid">
     {% for link in link_list %}
         {% if link.enabled == True %}
-        <li><a href={{link.hyperlink}}>{{link.website_name}}</a></li>
-        <a href={{link.hyperlink}}><img src="{{ link.image.url }}"></a>
+    <div title={{link.website_name}}><a href={{link.hyperlink}}><img src="{{ link.image.url }}" alt={{link.website_name}} width=100 height=100></a></div>
         {% endif %}
     {% endfor %}
-    </ul>
+    </div>
 {% else %}
     <br>
     {% trans "No links" %}
