@@ -184,4 +184,15 @@ def test_collection_create_view(client, create_test_links):
     assert collection.objects.count() == 1
 
 
+@pytest.mark.django_db
+def test_collection_update_view_remove_link(client, create_test_collection):
+    test_collection = create_test_collection
+    test_user = test_collection.user
+    client.force_login(test_user)
+    req = client.post(reverse('updateCollection', kwargs={'pk': test_collection.id}), data={})
+    assert req.status_code == 302
+    test_collection = collection.objects.get(id=test_collection.id)
+    assert test_collection.links.all().count() == 0
+
+
 
