@@ -39,7 +39,7 @@ def test_collection_page(client, create_test_collection):
     test_user = test_collection.user
 
     req = client.get(reverse('collectionPage', kwargs={'username': test_user.username,
-                                                        'collection_name': test_collection.name}))
+                                                       'collection_name': test_collection.name}))
     assert req.status_code == 200
 
 
@@ -47,14 +47,14 @@ def test_collection_page(client, create_test_collection):
 def test_collection_page_no_collection(client, create_test_user):
     test_user = create_test_user
     req = client.get(reverse('collectionPage', kwargs={'username': test_user.username,
-                                                        'collection_name': 'abc'}))
+                                                       'collection_name': 'abc'}))
     assert req.status_code == 404
 
 
 @pytest.mark.django_db
 def test_collection_page_no_user(client):
     req = client.get(reverse('collectionPage', kwargs={'username': 'testing123',
-                                                        'collection_name': 'abc'}))
+                                                       'collection_name': 'abc'}))
     assert req.status_code == 404
 
 
@@ -213,6 +213,7 @@ def test_collection_create_view_with_one_links(client, create_test_links):
     assert req.status_code == 302
     assert collection.objects.count() == 1
 
+
 # Collection Detail View tests
 @pytest.mark.django_db
 def test_collection_detail_view(client, create_test_collection):
@@ -260,7 +261,8 @@ def test_collection_link_delete_view(client, create_test_collection):
     test_collection = create_test_collection
     test_user = test_collection.user
     client.force_login(test_user)
-    req = client.post(reverse('removeLink', kwargs={'pk': test_collection.id}), data={'link_id': test_collection.links.get(pk=1).id})
+    req = client.post(reverse('removeLink', kwargs={'pk': test_collection.id}),
+                      data={'link_id': test_collection.links.get(pk=1).id})
     assert req.status_code == 302
     assert test_collection.links.all().count() == 0
 
