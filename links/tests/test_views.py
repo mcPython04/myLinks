@@ -14,22 +14,22 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 def test_home_view(client, create_test_user):
     test_user = create_test_user
     client.force_login(test_user)
-    resp = client.get(reverse('home'))
-    assert resp.status_code == 200
+    req = client.get(reverse('home'))
+    assert req.status_code == 200
 
 
 # User Page tests
 @pytest.mark.django_db
 def test_user_page(client, create_test_user):
     test_user = create_test_user
-    resp = client.get(reverse('userPage', kwargs={'username': test_user.username}))
-    assert resp.status_code == 200
+    req = client.get(reverse('userPage', kwargs={'username': test_user.username}))
+    assert req.status_code == 200
 
 
 @pytest.mark.django_db
 def test_no_user_page(client):
-    resp = client.get(reverse('userPage', kwargs={'username': 'testing123'}))
-    assert resp.status_code == 404
+    req = client.get(reverse('userPage', kwargs={'username': 'testing123'}))
+    assert req.status_code == 404
 
 
 # Collection Page tests
@@ -38,24 +38,24 @@ def test_collection_page(client, create_test_collection):
     test_collection = create_test_collection
     test_user = test_collection.user
 
-    resp = client.get(reverse('collectionPage', kwargs={'username': test_user.username,
+    req = client.get(reverse('collectionPage', kwargs={'username': test_user.username,
                                                         'collection_name': test_collection.name}))
-    assert resp.status_code == 200
+    assert req.status_code == 200
 
 
 @pytest.mark.django_db
 def test_collection_page_no_collection(client, create_test_user):
     test_user = create_test_user
-    resp = client.get(reverse('collectionPage', kwargs={'username': test_user.username,
+    req = client.get(reverse('collectionPage', kwargs={'username': test_user.username,
                                                         'collection_name': 'abc'}))
-    assert resp.status_code == 404
+    assert req.status_code == 404
 
 
 @pytest.mark.django_db
 def test_collection_page_no_user(client):
-    resp = client.get(reverse('collectionPage', kwargs={'username': 'testing123',
+    req = client.get(reverse('collectionPage', kwargs={'username': 'testing123',
                                                         'collection_name': 'abc'}))
-    assert resp.status_code == 404
+    assert req.status_code == 404
 
 
 # Base view tests
@@ -63,8 +63,8 @@ def test_collection_page_no_user(client):
 def test_base_view(client, create_test_user):
     test_user = create_test_user
     client.force_login(test_user)
-    resp = client.get(reverse('base'))
-    assert resp.status_code == 200
+    req = client.get(reverse('base'))
+    assert req.status_code == 200
 
 
 # Link Update View tests
@@ -154,10 +154,10 @@ def test_link_delete_view(client, create_test_link):
     assert User.objects.count() == 1
     assert link.objects.count() == 1
     client.force_login(test_user)
-    resp = client.get(reverse('deleteLink', kwargs={'pk': 1}))
-    assert resp.status_code == 200
-    resp1 = client.post(reverse('deleteLink', kwargs={'pk': 1}))
-    assert resp1.status_code == 302
+    req = client.get(reverse('deleteLink', kwargs={'pk': test_link.id}))
+    assert req.status_code == 200
+    req1 = client.post(reverse('deleteLink', kwargs={'pk': test_link.id}))
+    assert req1.status_code == 302
     assert User.objects.count() == 1
     assert link.objects.count() == 0
 
@@ -172,7 +172,7 @@ def test_link_upload_view(client, create_test_link_with_image):
                                    content=open('links/tests/test_data/amazon.jpg', 'rb').read(),
                                    content_type='image/jpeg')
 
-    req = client.post(reverse('uploadLink', kwargs={'pk': 1}), data={'image': new_photo})
+    req = client.post(reverse('uploadLink', kwargs={'pk': test_link.id}), data={'image': new_photo})
     assert req.status_code == 302
     assert link.objects.count() == 1
     assert User.objects.count() == 1
@@ -180,7 +180,7 @@ def test_link_upload_view(client, create_test_link_with_image):
 
 # Collection Create View tests
 @pytest.mark.django_db
-def test_collection_create_view(client, create_test_links):
+def test_collection_create_view_with_multiple_links(client, create_test_links):
     links = create_test_links(3)
     test_user = links[0].user
     client.force_login(test_user)
@@ -192,6 +192,27 @@ def test_collection_create_view(client, create_test_links):
     assert collection.objects.count() == 1
 
 
+@pytest.mark.django_db
+def test_collection_create_view_with_no_links(client, create_test_user):
+    test_user = create_test_user
+    client.force_login(test_user)
+    req = client.post(reverse('createCollection'), data={'name': 'abc',
+                                                         'user': test_user})
+    assert req.status_code == 302
+    assert collection.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_collection_create_view_with_one_links(client, create_test_links):
+    links = create_test_links(1)
+    test_user = links[0].user
+    client.force_login(test_user)
+    req = client.post(reverse('createCollection'), data={'name': 'abc',
+                                                         'user': test_user,
+                                                         'links': [link.id for link in links]})
+    assert req.status_code == 302
+    assert collection.objects.count() == 1
+
 # Collection Detail View tests
 @pytest.mark.django_db
 def test_collection_detail_view(client, create_test_collection):
@@ -201,8 +222,8 @@ def test_collection_detail_view(client, create_test_collection):
     assert collection.objects.count() == 1
     assert link.objects.count() == 1
     client.force_login(test_user)
-    resp = client.get(reverse('detailCollection', kwargs={'pk': 1}))
-    assert resp.status_code == 200
+    req = client.get(reverse('detailCollection', kwargs={'pk': test_collection.id}))
+    assert req.status_code == 200
     assert User.objects.count() == 1
     assert collection.objects.count() == 1
     assert link.objects.count() == 1
@@ -214,10 +235,10 @@ def test_collection_delete_view(client, create_test_collection):
     test_collection = create_test_collection
     test_user = test_collection.user
     client.force_login(test_user)
-    resp = client.get(reverse('deleteCollection', kwargs={'pk': 1}))
-    assert resp.status_code == 200
-    resp1 = client.post(reverse('deleteCollection', kwargs={'pk': 1}))
-    assert resp1.status_code == 302
+    req = client.get(reverse('deleteCollection', kwargs={'pk': test_collection.id}))
+    assert req.status_code == 200
+    req1 = client.post(reverse('deleteCollection', kwargs={'pk': test_collection.id}))
+    assert req1.status_code == 302
     assert collection.objects.count() == 0
 
 
@@ -239,8 +260,8 @@ def test_collection_link_delete_view(client, create_test_collection):
     test_collection = create_test_collection
     test_user = test_collection.user
     client.force_login(test_user)
-    resp = client.post(reverse('removeLink', kwargs={'pk': 1}), data={'link_id': test_collection.links.get(pk=1).id})
-    assert resp.status_code == 302
+    req = client.post(reverse('removeLink', kwargs={'pk': test_collection.id}), data={'link_id': test_collection.links.get(pk=1).id})
+    assert req.status_code == 302
     assert test_collection.links.all().count() == 0
 
 
