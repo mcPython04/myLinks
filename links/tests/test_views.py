@@ -69,7 +69,7 @@ def test_link_create_view(client, create_test_user):
     client.force_login(user)
     lcv = LinkCreateView()
     form = lcv.get_form_class()
-    newphoto = SimpleUploadedFile(name='test_image.jpg', content=open('/home/mchen/Downloads/youtube.png', 'rb').read(),
+    newphoto = SimpleUploadedFile(name='test_image.jpg', content=open('links/tests/test_data/background.jpg', 'rb').read(),
                                   content_type='image/jpeg')
     form = form(data={'hyperlink': 'https://twitter.com/', 'website_name': 'Twitter', 'image': newphoto})
     req = client.post(reverse('createLink'), data=form.data)
@@ -142,13 +142,13 @@ def test_no_user_page(client):
     assert resp.status_code == 404
 
 
-# @pytest.mark.django_db
-# def test_collection_page(client, create_test_collection):
-#     test_collection = create_test_collection
-#     test_user = test_collection.user
-#
-#     resp = client.get(reverse('collectionPage', kwargs={'username': test_user.username, 'collection_name': test_collection.name}))
-#     assert resp.status_code == 200
+@pytest.mark.django_db
+def test_collection_page(client, create_test_collection):
+    test_collection = create_test_collection
+    test_user = test_collection.user
+
+    resp = client.get(reverse('collectionPage', kwargs={'username': test_user.username, 'collection_name': test_collection.name}))
+    assert resp.status_code == 200
 
 
 @pytest.mark.django_db
@@ -164,24 +164,24 @@ def test_collection_page_no_user(client):
     assert resp.status_code == 404
 
 
+@pytest.mark.django_db
+def test_collection_create_view(client, create_test_links):
+    links = create_test_links(3)
+    test_user = links[0].user
+    # test_collection = create_test_collection
+    # test_user = test_collection.user
+    # test_link = test_collection.links.get(pk=1)
+    client.force_login(test_user)
+    # ccv = CollectionCreateView()
+    # form = ccv.get_form_class()
+    # import pdb;pdb.set_trace()
+    # form = form(data={'name': 'abc', 'user': test_user})
+    # form.links.set(test_link)
 
-
-
-# @pytest.mark.django_db
-# def test_collection_create_view(client, create_test_collection):
-#     test_collection = create_test_collection
-#     test_user = test_collection.user
-#     test_link = test_collection.links
-#     client.force_login(test_user)
-#     ccv = CollectionCreateView()
-#     requests = ccv.get_form_kwargs()
-#     form = ccv.get_form_class()
-#     form = form(data={'name': 'abc', 'user': test_user}, request=requests)
-#     form.links.set(test_link)
-#
-#     req = client.post(reverse('createCollection'), data=form.data)
-#     assert req.status_code == 302
-#     assert collection.objects.count() == 1
+    req = client.post(reverse('createCollection'), data={'name': 'abc', 'user': test_user, 'links': [link.id for link
+                                                                                                     in links]})
+    assert req.status_code == 302
+    assert collection.objects.count() == 1
 
 
 
