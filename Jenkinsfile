@@ -13,18 +13,12 @@ pipeline {
     stages {
       stage('Build') {
         steps {
-          sh 'python --version'
+          sh 'pip3 install -r requirements.txt'
         }
       }
 
     stage('Testing') {
       steps {
-        sh 'pip3 install django'
-        sh 'pip3 install django-registration'
-        sh 'pip3 install Pillow'
-        sh 'pip3 install requests'
-        sh 'pip3 install pytest-django'
-        sh 'pip3 install pytest-cov'
         sh 'pytest'
       }
     }
