@@ -106,6 +106,7 @@ class LinkCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        logger.info(self.request.user.username + ' created a link')
         return super(LinkCreateView, self).form_valid(form)
 
 
@@ -114,12 +115,20 @@ class LinkDeleteView(DeleteView):
     success_url = '../../home'
     template_name = 'links/delete.html'
 
+    def post(self, request, *args, **kwargs):
+        logger.info(self.request.user.username + ' deleted a link')
+        return super().post(request, *args, **kwargs)
+
 
 class LinkUploadView(UpdateView):
     model = link
     fields = ['image']
     template_name = 'links/image.html'
     success_url = '../../home'
+
+    def post(self, request, *args, **kwargs):
+        logger.info(self.request.user.username + ' updated a link\'s image')
+        return super().post(request, *args, **kwargs)
 
 
 # View to create collections
@@ -147,6 +156,7 @@ class CollectionCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        logger.info(self.request.user.username + ' created a collection')
         return super(CollectionCreateView, self).form_valid(form)
 
 
@@ -155,12 +165,20 @@ class CollectionDetailView(DetailView):
     model = collection
     template_name = 'links/collection_detail.html'
 
+    def get(self, request, *args, **kwargs):
+        logger.info(self.request.user.username + ' looked at a collection')
+        return super().get(request, *args, **kwargs)
+
 
 # Collection delete view
 class CollectionDeleteView(DeleteView):
     model = collection
     success_url = '../../../home'
     template_name = 'links/delete_collection.html'
+
+    def post(self, request, *args, **kwargs):
+        logger.info(self.request.user.username + ' deleted a collection')
+        return super().post(request, *args, **kwargs)
 
 
 # Collection update view
@@ -180,11 +198,16 @@ class CollectionUpdateView(UpdateView):
         kwargs['request'] = self.request
         return kwargs
 
+    def post(self, request, *args, **kwargs):
+        logger.info(self.request.user.username + ' updated a collection')
+        return super().post(request, *args, **kwargs)
+
 
 # Remove links from specified collection
 def collection_link_delete_view(request, pk):
     link1 = get_object_or_404(link, id=request.POST.get('link_id'))
     link1.collection_set.remove(pk)
+    logger.info(request.user + ' removed a link from his/her collection')
     return HttpResponseRedirect(reverse('detailCollection', args=[str(pk)]))
 
 
