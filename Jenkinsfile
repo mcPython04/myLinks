@@ -1,35 +1,31 @@
 pipeline {
-  agent {
-    docker {
-      image 'python:3.8'
-      args '-u root --cap-add NET_ADMIN'
-    }
-
-  }
-
-  environment {
-    DISABLE_AUTH = 'true'
-    DB_ENGINE = 'sqlite'
-  }
-
-
-  stages {
-    stage('Build') {
-      steps {
-<<<<<<< HEAD
-        sh 'python --version'
-=======
-        sh '''python --version 
-'''
+    agent {
+      docker {
+        image 'python:3.8'
+        args '-u root --cap-add NET_ADMIN'
       }
     }
+    environment {
+      DISABLE_AUTH = 'true'
+      DB_ENGINE = 'sqlite'
+    }
+
+    stages {
+      stage('Build') {
+        steps {
+          sh 'python --version'
+        }
+      }
 
     stage('Testing') {
       steps {
-        sh '''pip install django
-python3 manage.py test
-'''
->>>>>>> dd5e9a9ad1e581defb93df1e599a3b4c668f80cb
+        sh 'pip3 install django'
+        sh 'pip3 install django-registration'
+        sh 'pip3 install Pillow'
+        sh 'pip3 install requests'
+        sh 'pip3 install pytest-django'
+        sh 'pip3 install pytest-cov'
+        sh 'pytest'
       }
     }
 
