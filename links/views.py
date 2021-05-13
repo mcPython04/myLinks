@@ -115,9 +115,9 @@ class LinkDeleteView(DeleteView):
     success_url = '../../home'
     template_name = 'links/delete.html'
 
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         logger.info(self.request.user.username + ' deleted a link')
-        return super().post(request, *args, **kwargs)
+        return super().delete(request, *args, **kwargs)
 
 
 class LinkUploadView(UpdateView):
@@ -126,9 +126,9 @@ class LinkUploadView(UpdateView):
     template_name = 'links/image.html'
     success_url = '../../home'
 
-    def post(self, request, *args, **kwargs):
+    def form_valid(self, form):
         logger.info(self.request.user.username + ' updated a link\'s image')
-        return super().post(request, *args, **kwargs)
+        return super().form_valid(form)
 
 
 # View to create collections
@@ -176,9 +176,9 @@ class CollectionDeleteView(DeleteView):
     success_url = '../../../home'
     template_name = 'links/delete_collection.html'
 
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         logger.info(self.request.user.username + ' deleted a collection')
-        return super().post(request, *args, **kwargs)
+        return super().delete(request, *args, **kwargs)
 
 
 # Collection update view
@@ -198,9 +198,9 @@ class CollectionUpdateView(UpdateView):
         kwargs['request'] = self.request
         return kwargs
 
-    def post(self, request, *args, **kwargs):
+    def form_valid(self, form):
         logger.info(self.request.user.username + ' updated a collection')
-        return super().post(request, *args, **kwargs)
+        return super().form_valid(form)
 
 
 # Remove links from specified collection
