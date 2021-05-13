@@ -2,20 +2,19 @@
 {% load i18n %}
 
 {% block content %}
-{{username}} {% trans "'s " %} {{collection_name}} {% trans "collection" %}
+<p class="page-title">{{username}}{% trans "'s " %} {{collection_name}} {% trans "collection" %}</p>
 
 {% if collection.links.all %}
-    <ul>
+    <div class="links-grid">
     {% for link in collection.links.all %}
         {% if link.enabled == True %}
-        <li><a href={{link.hyperlink}}>{{link.website_name}}</a></li>
-        <a href={{link.hyperlink}}><img src="{{ link.image.url }}"></a>
+        <div class="links-item" title="{{link.website_name}}"><a href={{link.hyperlink}}><img src="{{ link.image.url }}" alt="{{link.website_name}}" width=100 height=100></a></div>
         {% endif %}
     {% endfor %}
-    </ul>
+    </div>
 {% else %}
     <br>
-    {% trans "No links" %}
+    <p class="section-title">{% trans "No links" %}</p>
 {% endif %}
 
 {% endblock %}
