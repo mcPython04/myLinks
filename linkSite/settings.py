@@ -151,7 +151,7 @@ LOGGING = {
     },
     'formatters': {
         'simple': {
-            'format': '%(asctime)s%(message)s'
+            'format': '%(asctime)s %(message)s'
         }
     }
 }

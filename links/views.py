@@ -25,7 +25,7 @@ def home(request):
     context = {
             'link_list' : link_list, 'collection_list' : collection_list
         }
-    logger.info('User visited the home page')
+    logger.info(request.user.username + ' visited the home page')
     return HttpResponse(template.render(context, request))
 
 
@@ -41,8 +41,10 @@ def userPage(request, username):
             context = {
                 'link_list' : link_list,'username' : username
             }
+            logger.info(request.user.username + ' visited ' + username + '\'s page')
             return HttpResponse(template.render(context, request))
     else:
+        logger.info(request.user.username + ' tried to visit a user\'s page that did not exist')
         raise Http404("No Such User Exists.")
 
 
@@ -54,10 +56,13 @@ def collectionPage(request, username, collection_name):
             context = {
                 'collection': collection1, 'username': username, 'collection_name': collection_name
             }
+            logger.info(request.user.username + ' visited ' + username + '\'s ' + collection_name + ' collection')
             return HttpResponse(template.render(context, request))
         else:
+            logger.info(request.user.username + ' tried to visit ' + username + '\'s collection that did not exist')
             raise Http404("No Such Collection Exists.")
     else:
+        logger.info(request.user.username + ' tried to visit a user\'s collection page but the user did not exist')
         raise Http404("No Such User Exists.")
 
 
