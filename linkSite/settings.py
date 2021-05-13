@@ -132,3 +132,27 @@ LOGOUT_REDIRECT_URL = "base"
 ACCOUNT_ACTIVATION_DAYS = 7
 
 #AUTH_USER_MODEL = 'links.User'
+
+LOGGING = {
+    'version': 1,
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO'
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': './logs/myLinks.log',
+            'formatter': 'simple',
+        }
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s%(message)s'
+        }
+    }
+}
+

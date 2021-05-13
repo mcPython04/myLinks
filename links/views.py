@@ -12,6 +12,9 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.db import IntegrityError
+import logging
+
+logger = logging.getLogger('django')
 
 
 def home(request):
@@ -22,6 +25,7 @@ def home(request):
     context = {
             'link_list' : link_list, 'collection_list' : collection_list
         }
+    logger.info('User visited the home page')
     return HttpResponse(template.render(context, request))
 
 
