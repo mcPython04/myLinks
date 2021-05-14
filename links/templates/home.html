@@ -4,16 +4,19 @@
 {% block content %}
 {% if user.is_authenticated %}
 <p class="page-title">{{ user.username }}'s {% trans "Home Page" %}</p>
-<br>
-<br>
 <p class="section-title">Links:</p>
 <a class="option" href="{% url 'createLink'%}" >{% trans "Add New Link" %}</a>
     {% if link_list %}
         <div class="links-grid">
         {% for link in link_list %}
+            {% if forloop.counter <= 6 %}
             <div class="links-item" title="{{link.website_name}}">
-                <a href={{link.hyperlink}}><img src="{{ link.image.url }}" alt="{{link.website_name}}" width=100 height=100></a>
+                <a href="#"><img src="{{ link.image.url }}" alt="{{link.website_name}}"></a>
+                <input class="toggle" type="checkbox" id="toggle_options"/>
+                <label class="option" for="toggle_options">{% trans "Options" %}</label>
                 <div class="option-grid">
+                    <p class="section-title">{{link.website_name}}</p>
+                    <a class="option" href={{link.hyperlink}}>{% trans "Visit Link" %}</a>
                     <a class="option" href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
                     <a class="option" href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
                     {% if link.default %}
@@ -49,9 +52,11 @@
                         <input type="hidden" name="set" value="Set">
                         <input type="hidden" name="type" value="Enable">
                     </form>
-                {% endif %}
+                    {% endif %}
+                    <label class="option" for="toggle_options">{% trans "Exit" %}</label>
                 </div>
             </div>
+            {% endif %}
         {% endfor %}
         </div>
     {% else %}

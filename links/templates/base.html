@@ -17,22 +17,21 @@
         <div class="nav-bar">
             <a class="hover" href="{% url 'home' %}">{% trans "Home" %}</a>
             
-            {% if user.is_superuser %}
-            <a class="hover" href="{% url 'admin:index' %}">admin panel</a>
-            {% endif %}
-
-            <ul>
-                <li style="font-size:larger;">{% trans "Logged in" %}: {{ user.username }}</li>
-                <li><a href="{% url 'logout' %}">{% trans "Log out" %}</a> | 
-                <a href="{% url 'password_change' %}">{% trans "Change password" %}</a></li>
-            </ul>
+            <div class="dropdown">
+                <input class="toggle" type="checkbox" id="toggle_drop"/>
+                <label for="toggle_drop">{% trans "User" %}: {{ user.username }}</label>
+                <div class="dropdown-content">
+                    <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
+                    <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>
+                </div>
+            </div>
         </div>
 
     {% else %}
        <a href="{% url 'login' %}">{% trans "Log in" %}</a>
        <a href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>
     {% endif %}
-    <hr />
+    <!-- <hr /> -->
     {% endblock %}
     </div>
     <div id="content">
@@ -41,7 +40,7 @@
 
     <div id="footer">
     {% block footer %}
-        <hr />
+    <!-- <hr /> -->
     {% endblock %}
     </div>
 </body>

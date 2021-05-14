@@ -1,54 +1,77 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(187, 187, 187);
+    font-size: 3em;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-bar {
     display: flex;
-    list-style-type: none;
-    justify-content: flex-start;
+    flex-direction: column;
+    overflow: hidden;
     margin: 0;
-    /* margin-bottom: 50px; */
     padding: 0;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
     background-color: whitesmoke;
 }
 
-.nav-bar a, .nav-bar li {
-    padding: 8px;
+.nav-bar * {
+    display: block;
+    padding: 0.3em;
     text-align: center;
+    text-decoration: none;
+    color: black;
+    /* border: 1ch solid black; */
 }
 
-.hover {
-    padding-left: 20px;
-    padding-right: 20px;
+.dropdown {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-content {
+    display: none;
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 0.3em;
+    background-color: whitesmoke;
+}
+
+.toggle {
+    display: none;
+}
+
+.toggle:checked + label ~ .dropdown-content {
+    display: block;
+}
+
+/* .hover {
+    padding-left: 20em;
+    padding-right: 20em;
     text-decoration: none;
     color: black;
 }
 
 .hover:hover {
     background-color: grey;
-}
-
-.nav-bar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    margin-left: auto;
-}
-
-.nav-bar ul li {
-    padding: 2px;
-}
+} */
 
 .links-grid {
     margin: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    padding: 10px;
-    width: 60vw;
+    grid-template-columns: 1fr 1fr;
     /* background-color: blue; */
+}
+
+@media screen and (orientation: landscape) {
+    .links-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 .links-item {
@@ -57,8 +80,10 @@ body {
 }
 
 img {
-    padding: 10px;
-    border-radius: 25%;
+    height: 5em;
+    width: 5em;
+    padding: 1em;
+    border-radius: 32%;
     transition: transform .2s;
 }
 
@@ -69,44 +94,61 @@ img:hover {
 
 .page-title {
     text-align: center;
-    font-size: x-large;
+    font-size: 1.5em;
     font-weight: bolder;
-    padding: 20px;
+    margin: 0.25em;
+    padding: 0.25em;
 }
 
 .section-title {
     text-align: center;
-    font-size: larger;
+    font-size: 1.25em;
     font-weight: bold;
+    margin: 0.25em;
+    padding: 0.25em;
     /* text-decoration: underline; */
 }
 
 .option-grid {
-    display: grid;
+    display: none;
+    position: absolute;
+    background-color: darkgrey;
+    padding: 0.25em;
 }
 
 .option {
     display: block;
     margin: auto;
-    margin-bottom: 1px;
-    margin-top: 1px;
-    padding: 5px;
-    max-width: 20vw;
-    background-color: white;
+    margin-bottom: 0.2em;
+    margin-top: 0.2em;
+    padding: 0.2em;
+    max-width: 33vw;
+    background-color: whitesmoke;
     color: black;
-    border-radius: 5px;
-    border: 1px solid grey;
+    border: 0.1em solid grey;
     text-decoration: none;
     text-align: center;
-    font-size: small;
+    font-size: 0.75em;
+}
+
+.option-grid .option {
+    margin-bottom: 0.2em;
+    margin-top: 0.2em;
+    padding: 0.2em;
+    background-color: whitesmoke;
+    color: black;
+    border: 0.1em solid grey;
+}
+
+.toggle:checked + label ~ .option-grid {
+    display: grid;
 }
 
 .collection-box {
     /* background-color: red; */
     display: flex;
     margin: auto;
-    padding: 20px;
-    width: 60vw;
+    padding: 1em;
     align-content: center;
     justify-content: center;
 }
