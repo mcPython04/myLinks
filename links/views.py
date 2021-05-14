@@ -13,9 +13,39 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.db import IntegrityError
 import logging
+from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
+from django.dispatch import receiver
 
 logger = logging.getLogger('django')
 
+
+@receiver(user_logged_in)
+def user_logged_in_callback(sender, request, user, **kwargs):
+    ip = request.META.get('REMOTE_ADDR')
+
+    logger.info('{user} logged in via ip: {ip}'.format(
+        user=user,
+        ip=ip,
+    ))
+
+
+@receiver(user_logged_out)
+def user_logged_out_callback(sender, request, user, **kwargs):
+    ip = request.META.get('REMOTE_ADDR')
+
+    logger.info('{user} logged out via ip: {ip}'.format(
+        user=user,
+        ip=ip,
+    ))
+
+
+@receiver(user_login_failed)
+def user_login_failed_callback(sender, request, credentials, **kwargs):
+    ip = request.META.get('REMOTE_ADDR')
+    logger.warning('login failed for: {credentials} via ip: {ip}'.format(
+        credentials=credentials,
+        ip=ip,
+    ))
 
 def home(request):
     #return render(request, 'home.html')
