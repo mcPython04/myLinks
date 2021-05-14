@@ -19,22 +19,22 @@ async def main() -> None:
     # "Logged in as @alice:example.org device id: RANDOMDID"
     # If you made a new room and haven't joined as that user, you can use
     # await client.join("your-room-id")
-    filePath = 'logs/myLinks.log'
+    file_path = 'logs/myLinks.log'
 
     # Referenced from stack overflow https://stackoverflow.com/a/24818607
-    lastLine = None
-    with open(filePath, 'r') as f:
+    last_line = None
+    with open(file_path, 'r') as f:
         while True:
             line = f.readline()
             if not line:
                 break
-            lastLine = line
+            last_line = line
 
     while True:
-        with open(filePath, 'r') as f:
+        with open(file_path, 'r') as f:
             lines = f.readlines()
-        if lines[-1] != lastLine:
-            lastLine = lines[-1]
+        if lines[-1] != last_line:
+            last_line = lines[-1]
             await client.room_send(
                 # Watch out! If you join an old room you'll see lots of old messages
                 room_id="!nXDYFQhwioFnAwUHiB:ether.ai",
