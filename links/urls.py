@@ -1,9 +1,7 @@
 from django.urls import path
 from . import views
-from django.conf.urls import include, url
+from django.conf.urls import include
 from links.views import base
-from django.contrib import admin
-from .models import collection
 
 urlpatterns = [ 
     path('home', views.home, name='home'),
@@ -17,5 +15,9 @@ urlpatterns = [
     path('links/delete/<slug:pk>', views.LinkDeleteView.as_view(), name='deleteLink'),
     path('links/upload/<slug:pk>', views.LinkUploadView.as_view(), name='uploadLink'),
     path('links/collection/<slug:pk>', views.CollectionDetailView.as_view(), name='detailCollection'),
+    path('links/collection/delete/<slug:pk>', views.CollectionDeleteView.as_view(), name='deleteCollection'),
+    path('collection/links/remove/<slug:pk>', views.collection_link_delete_view, name='removeLink'),
+    path('collection/links/update/<slug:pk>', views.CollectionUpdateView.as_view(), name='updateCollection'),
     path('<str:username>/<str:collection_name>', views.collectionPage, name="collectionPage"),
+
 ]

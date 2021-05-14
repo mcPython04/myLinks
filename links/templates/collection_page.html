@@ -4,6 +4,7 @@
 {% block content %}
 {{username}} {% trans "'s " %} {{collection_name}} {% trans "collection" %}
 
+<!-- Displays enabled links of the collection -->
 {% if collection.links.all %}
     <ul>
     {% for link in collection.links.all %}
@@ -13,6 +14,7 @@
         {% endif %}
     {% endfor %}
     </ul>
+
 {% else %}
     <br>
     {% trans "No links" %}

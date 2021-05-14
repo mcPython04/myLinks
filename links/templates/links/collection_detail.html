@@ -2,50 +2,22 @@
 {% load i18n %}
 
 {% block content %}
+
+<!-- If collection owner is the currently logged in user; display the page-->
+{% if user == collection.user %}
+
+
+<!-- Displays the detail(links) of the collection -->
 <h1>{{ collection.name }}</h1>
 
 {% if collection.links.all %}
         <ul>
         {% for link in collection.links.all%}
             <li><a href={{link.hyperlink}}>{{link.website_name}}</a>
-             |
-            <a href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
-            |
-            <a href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
-            {% if link.default %}
-                <form action="{% url 'updateLink' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" name="button" value="Remove Default">
-                    <input type="hidden" name="d_id" value={{link.id}}>
-                    <input type="hidden" name="set" value="Remove">
-                    <input type="hidden" name="type" value="Default">
-                </form>
-            {% else %}
-                <form action="{% url 'updateLink' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" name="button" value="Set Default">
-                    <input type="hidden" name="d_id" value={{link.id}}>
-                    <input type="hidden" name="set" value="Set">
-                    <input type="hidden" name="type" value="Default">
-                </form>
-            {% endif %}
-            {% if link.enabled %}
-            <form action="{% url 'updateLink' %}" method="post">
+                <form action="{% url 'removeLink' collection.id %} " method ="post">
                 {% csrf_token %}
-                <input type="submit" name="button" value="Disable">
-                <input type="hidden" name="d_id" value={{link.id}}>
-                <input type="hidden" name="set" value="Disable">
-                <input type="hidden" name="type" value="Enable">
+                <button type="submit", name="link_id", value="{{ link.id }}">Remove Link</button>
             </form>
-            {% else %}
-            <form action="{% url 'updateLink' %}" method="post">
-                {% csrf_token %}
-                <input type="submit" name="button" value="Enable">
-                <input type="hidden" name="d_id" value={{link.id}}>
-                <input type="hidden" name="set" value="Set">
-                <input type="hidden" name="type" value="Enable">
-            </form>
-            {% endif %}
         {% endfor %}
 
         </ul>
@@ -54,5 +26,15 @@
         <br>
         <br>
     {% endif %}
+
+    <!-- Click on links to update or delete collection -->
+    <a href="{% url 'updateCollection' collection.pk %}"><button type = "button">Update Collection</button></a>
+    <a href="{% url 'deleteCollection' collection.pk %}"><button type = "button">Delete Collection</button></a>
+
+<!-- If the collection owner is not the logged in user display this message -->
+{% else %}
+<strong>This is not your collection.</strong>
+
+{% endif %}
 
 {% endblock %}
