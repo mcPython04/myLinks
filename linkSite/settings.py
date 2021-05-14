@@ -138,12 +138,12 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'INFO'
+            'level': 'WARNING'
         }
     },
     'handlers': {
         'file': {
-            'level': 'INFO',
+            'level': 'WARNING',
             'class': 'logging.FileHandler',
             'filename': './logs/myLinks.log',
             'formatter': 'simple',
