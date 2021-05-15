@@ -55,4 +55,14 @@
         <br>
     {% endif %}
 
+    <!-- Click on links to update or delete collection -->
+    <a href="{% url 'updateCollection' collection.pk %}"><button type = "button">Update Collection</button></a>
+    <a href="{% url 'deleteCollection' collection.pk %}"><button type = "button">Delete Collection</button></a>
+
+<!-- If the collection owner is not the logged in user display this message -->
+{% else %}
+<strong>This is not your collection.</strong>
+
+{% endif %}
+
 {% endblock %}

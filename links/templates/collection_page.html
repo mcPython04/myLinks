@@ -4,6 +4,7 @@
 {% block content %}
 <p class="page-title">{{username}}{% trans "'s " %} {{collection_name}} {% trans "collection" %}</p>
 
+<!-- Displays enabled links of the collection -->
 {% if collection.links.all %}
     <div class="links-grid">
     {% for link in collection.links.all %}

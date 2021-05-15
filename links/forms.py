@@ -18,5 +18,51 @@ class CreateCollectionForm(forms.ModelForm):
     name = forms.CharField()
     links = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        queryset=None
+        required=False,
+        queryset=None,
     )
+
+
+# Our own update collection form
+class UpdateCollectionForm(forms.ModelForm):
+
+    # Grants access to request object so that only links of the current user are given as options
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(UpdateCollectionForm, self).__init__(*args, **kwargs)
+        self.fields['links'].queryset = link.objects.filter(user=self.request.user)
+
+    class Meta:
+        model = collection
+        fields = ['links']
+
+    links = forms.ModelMultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        queryset=None,
+    )
+
+
+class UpdateLinkRemoveDefaultForm(forms.Form):
+    d_id = forms.IntegerField(widget=forms.HiddenInput())
+    set = forms.CharField(widget=forms.HiddenInput())
+    type = forms.CharField(widget=forms.HiddenInput())
+
+
+class UpdateLinkSetDefaultForm(forms.Form):
+    d_id = forms.IntegerField(widget=forms.HiddenInput())
+    set = forms.CharField(widget=forms.HiddenInput())
+    type = forms.CharField(widget=forms.HiddenInput())
+
+
+class UpdateLinkDisableForm(forms.Form):
+    d_id = forms.IntegerField(widget=forms.HiddenInput())
+    set = forms.CharField(widget=forms.HiddenInput())
+    type = forms.CharField(widget=forms.HiddenInput())
+
+
+class UpdateLinkEnableForm(forms.Form):
+    d_id = forms.IntegerField(widget=forms.HiddenInput())
+    set = forms.CharField(widget=forms.HiddenInput())
+    type = forms.CharField(widget=forms.HiddenInput())
+
