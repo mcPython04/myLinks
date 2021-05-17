@@ -136,11 +136,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 
 def requests_filter(record):
-    print(record.args)
-
-    if 'GET' in record.args:
-        return False
-    if record.msg.startswith('POST'):
+    if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
         return False
     return True
 
