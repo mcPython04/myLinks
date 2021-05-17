@@ -1,6 +1,7 @@
 import asyncio
 import time
-
+import os
+import env
 from nio import AsyncClient, MatrixRoom, RoomMessageText
 
 
@@ -12,10 +13,10 @@ async def message_callback(room: MatrixRoom, event: RoomMessageText) -> None:
 
 
 async def main() -> None:
-    client = AsyncClient("https://matrix.ether.ai", "logbot")
+    client = AsyncClient("https://matrix.ether.ai", os.environ['BOT_USER'])
     client.add_event_callback(message_callback, RoomMessageText)
 
-    print(await client.login("usb33java"))
+    print(await client.login(os.environ['BOT_PASSWORD']))
     # "Logged in as @alice:example.org device id: RANDOMDID"
     # If you made a new room and haven't joined as that user, you can use
     # await client.join("your-room-id")

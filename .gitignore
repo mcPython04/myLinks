@@ -140,3 +140,5 @@ cython_debug/
 
 #sqlite3
 db.sqlite3
+
+env.py
