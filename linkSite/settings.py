@@ -134,8 +134,25 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 #AUTH_USER_MODEL = 'links.User'
 
+
+def requests_filter(record):
+    print(record.args)
+
+    if 'GET' in record.args:
+        return False
+    if record.msg.startswith('POST'):
+        return False
+    return True
+
+
 LOGGING = {
     'version': 1,
+    'filters': {
+        'requests_filter': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': requests_filter
+        }
+    },
     'loggers': {
         'django': {
             'handlers': ['file'],
@@ -150,6 +167,7 @@ LOGGING = {
     'handlers': {
         'file': {
             'level': 'INFO',
+            'filters': ['requests_filter'],
             'class': 'logging.FileHandler',
             'filename': './logs/myLinks.log',
             'formatter': 'simple',
