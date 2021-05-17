@@ -136,14 +136,16 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 
 def requests_filter(record):
-    if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
-        return False
+    if type(record.args) is tuple:
+        if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
+            return False
     return True
 
 
 def request_filter2(record):
-    if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
-        return True
+    if type(record.args) is tuple:
+        if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
+            return True
     return False
 
 
