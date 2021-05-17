@@ -1,4 +1,4 @@
-{% load i18n %}{% trans "Account activation on" %} {{ site.name }}
+{% load i18n %}{% trans "Account activation on" %} {{ site.name }}{% url 'django_registration_activate' activation_key=activation_key %}
 
 https://{{ site.domain }}{% url 'django_registration_activate' activation_key=activation_key %}
 
