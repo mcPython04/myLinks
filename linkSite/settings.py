@@ -141,24 +141,30 @@ def requests_filter(record):
     return True
 
 
+def request_filter2(record):
+    if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
+        return True
+    return False
+
+
 LOGGING = {
     'version': 1,
     'filters': {
         'requests_filter': {
             '()': 'django.utils.log.CallbackFilter',
             'callback': requests_filter
+        },
+        'requests_filter2': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': request_filter2
         }
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file', 'request_file'],
             'level': 'INFO'
         },
 
-        'django_request': {
-            'handlers': ['request_file'],
-            'level': 'INFO'
-        }
     },
     'handlers': {
         'file': {
@@ -171,6 +177,7 @@ LOGGING = {
 
         'request_file': {
             'level': 'INFO',
+            'filters':['requests_filter2'],
             'class': 'logging.FileHandler',
             'filename': './logs/myLinks_http.log',
             'formatter': 'simple',

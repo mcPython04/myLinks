@@ -14,7 +14,6 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out, user_lo
 from django.dispatch import receiver
 
 logger = logging.getLogger('django')
-logger1 = logging.getLogger('django_request')
 
 
 @receiver(user_logged_in)
@@ -25,7 +24,6 @@ def user_logged_in_callback(sender, request, user, **kwargs):
         user=user,
         ip=ip,
     ))
-    logger1.info(request)
 
 
 @receiver(user_logged_out)
@@ -36,7 +34,6 @@ def user_logged_out_callback(sender, request, user, **kwargs):
         user=user,
         ip=ip,
     ))
-    logger1.info(request)
 
 
 @receiver(user_login_failed)
@@ -46,7 +43,6 @@ def user_login_failed_callback(sender, request, credentials, **kwargs):
         credentials=credentials,
         ip=ip,
     ))
-    logger1.info(request)
 
 
 def home(request):
@@ -57,7 +53,6 @@ def home(request):
             'link_list': link_list, 'collection_list': collection_list
         }
     logger.info(request.user.username + ' visited the home page')
-    logger1.info(request)
     return HttpResponse(template.render(context, request))
 
 
@@ -74,11 +69,9 @@ def userPage(request, username):
                 'link_list' : link_list,'username' : username
             }
             logger.info(request.user.username + ' visited ' + username + '\'s page')
-            logger1.info(request)
             return HttpResponse(template.render(context, request))
     else:
         logger.info(request.user.username + ' tried to visit a user\'s page that did not exist')
-        logger1.info(request)
         raise Http404("No Such User Exists.")
 
 
@@ -91,15 +84,12 @@ def collectionPage(request, username, collection_name):
                 'collection': collection1, 'username': username, 'collection_name': collection_name
             }
             logger.info(request.user.username + ' visited ' + username + '\'s ' + collection_name + ' collection')
-            logger1.info(request)
             return HttpResponse(template.render(context, request))
         else:
             logger.info(request.user.username + ' tried to visit ' + username + '\'s collection that did not exist')
-            logger1.info(request)
             raise Http404("No Such Collection Exists.")
     else:
         logger.info(request.user.username + ' tried to visit a user\'s collection page but the user did not exist')
-        logger1.info(request)
         raise Http404("No Such User Exists.")
 
 
@@ -144,7 +134,6 @@ class LinkCreateView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         logger.info(self.request.user.username + ' created a link')
-        logger1.info(self.request)
         return super(LinkCreateView, self).form_valid(form)
 
 
@@ -155,7 +144,6 @@ class LinkDeleteView(DeleteView):
 
     def delete(self, request, *args, **kwargs):
         logger.info(self.request.user.username + ' deleted a link')
-        logger1.info(request)
         return super().delete(request, *args, **kwargs)
 
 
@@ -167,7 +155,6 @@ class LinkUploadView(UpdateView):
 
     def form_valid(self, form):
         logger.info(self.request.user.username + ' updated a link\'s image')
-        logger1.info(self.request)
         return super().form_valid(form)
 
 
@@ -197,7 +184,6 @@ class CollectionCreateView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         logger.info(self.request.user.username + ' created a collection')
-        logger1.info(self.request)
         return super(CollectionCreateView, self).form_valid(form)
 
 
@@ -208,7 +194,6 @@ class CollectionDetailView(DetailView):
 
     def get(self, request, *args, **kwargs):
         logger.info(self.request.user.username + ' looked at a collection')
-        logger1.info(request)
         return super().get(request, *args, **kwargs)
 
 
@@ -220,7 +205,6 @@ class CollectionDeleteView(DeleteView):
 
     def delete(self, request, *args, **kwargs):
         logger.info(self.request.user.username + ' deleted a collection')
-        logger1.info(request)
         return super().delete(request, *args, **kwargs)
 
 
@@ -243,7 +227,6 @@ class CollectionUpdateView(UpdateView):
 
     def form_valid(self, form):
         logger.info(self.request.user.username + ' updated a collection')
-        logger1.info(self.request)
         return super().form_valid(form)
 
 
@@ -252,6 +235,5 @@ def collection_link_delete_view(request, pk):
     link1 = get_object_or_404(link, id=request.POST.get('link_id'))
     link1.collection_set.remove(pk)
     logger.info(request.user.username + ' removed a link from his/her collection')
-    logger1.info(request)
     return HttpResponseRedirect(reverse('detailCollection', args=[str(pk)]))
 
