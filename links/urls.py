@@ -7,6 +7,7 @@ urlpatterns = [
     path('home', views.home, name='home'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('allauth.urls')),
     path('', base, name="base"),
     path('<str:username>', views.userPage, name="userPage"),
     path('links/update', views.linkUpdateView, name='updateLink'),
