@@ -3,75 +3,81 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-{{ user.username }}'s {% trans "Home Page" %}
-<br>
-<br>
-Links:
+<p class="page-title">{{ user.username }}'s {% trans "Home Page" %}</p>
+<p class="section-title">Links:</p>
+<a class="option" href="{% url 'createLink'%}" >{% trans "Add New Link" %}</a>
     {% if link_list %}
-        <ul>
+        <div class="links-grid">
         {% for link in link_list %}
-            <li><a href={{link.hyperlink}}>{{link.website_name}}</a>
-             | 
-            <a href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
-            | 
-            <a href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
-            {% if link.default %}
-                <form action="{% url 'updateLink' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" name="button" value="Remove Default">
-                    <input type="hidden" name="d_id" value={{link.id}}>
-                    <input type="hidden" name="set" value="Remove">
-                    <input type="hidden" name="type" value="Default">
-                </form>
-            {% else %}
-                <form action="{% url 'updateLink' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" name="button" value="Set Default">
-                    <input type="hidden" name="d_id" value={{link.id}}>
-                    <input type="hidden" name="set" value="Set">
-                    <input type="hidden" name="type" value="Default">
-                </form>
-            {% endif %}
-            {% if link.enabled %}
-            <form action="{% url 'updateLink' %}" method="post">
-                {% csrf_token %}
-                <input type="submit" name="button" value="Disable">
-                <input type="hidden" name="d_id" value={{link.id}}>
-                <input type="hidden" name="set" value="Disable">
-                <input type="hidden" name="type" value="Enable">
-            </form>
-            {% else %}
-            <form action="{% url 'updateLink' %}" method="post">
-                {% csrf_token %}
-                <input type="submit" name="button" value="Enable">
-                <input type="hidden" name="d_id" value={{link.id}}>
-                <input type="hidden" name="set" value="Set">
-                <input type="hidden" name="type" value="Enable">
-            </form>
+            {% if forloop.counter <= 6 %}
+            <div class="links-item" title="{{link.website_name}}">
+                <img src="{{ link.image.url }}" alt="{{link.website_name}}">
+                <input class="toggle" type="checkbox" id="toggle_options{{forloop.counter}}"/>
+                <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Options" %}</label>
+                <div class="option-grid">
+                    <p class="section-title">{{link.website_name}}</p>
+                    <a class="option" href={{link.hyperlink}}>{% trans "Visit Link" %}</a>
+                    <a class="option" href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
+                    <a class="option" href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
+                    {% if link.default %}
+                    <form action="{% url 'updateLink' %}" method="post">
+                        {% csrf_token %}
+                        <input class="option" type="submit" name="button" value="Remove Default">
+                        <input type="hidden" name="d_id" value={{link.id}}>
+                        <input type="hidden" name="set" value="Remove">
+                        <input type="hidden" name="type" value="Default">
+                    </form>
+                    {% else %}
+                    <form action="{% url 'updateLink' %}" method="post">
+                        {% csrf_token %}
+                        <input class="option" type="submit" name="button" value="Set Default">
+                        <input type="hidden" name="d_id" value={{link.id}}>
+                        <input type="hidden" name="set" value="Set">
+                        <input type="hidden" name="type" value="Default">
+                    </form>
+                    {% endif %}
+                    {% if link.enabled %}
+                    <form action="{% url 'updateLink' %}" method="post">
+                        {% csrf_token %}
+                        <input class="option" type="submit" name="button" value="Disable">
+                        <input type="hidden" name="d_id" value={{link.id}}>
+                        <input type="hidden" name="set" value="Disable">
+                        <input type="hidden" name="type" value="Enable">
+                    </form>
+                    {% else %}
+                    <form action="{% url 'updateLink' %}" method="post">
+                        {% csrf_token %}
+                        <input class="option" type="submit" name="button" value="Enable">
+                        <input type="hidden" name="d_id" value={{link.id}}>
+                        <input type="hidden" name="set" value="Set">
+                        <input type="hidden" name="type" value="Enable">
+                    </form>
+                    {% endif %}
+                    <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Close Window" %}</label>
+                </div>
+            </div>
             {% endif %}
         {% endfor %}
-        
-        </ul>
+        </div>
     {% else %}
-        {% trans "No links" %}
+        <p class="section-title">{% trans "No links" %}</p>
         <br>
         <br>
     {% endif %}
-    <li><a href="{% url 'createLink'%}" >{% trans "New Link" %}</a></li>
 <br>
-Collections:
+<p class="section-title">Collections:</p>
+<a class="option" href="{% url 'createCollection' %}" >{% trans "New Collection" %}</a>
     {% if collection_list %}
-    <ul>
+    <div class="collection-box">
         {% for collection in collection_list %}
-        <li><a href="{% url 'detailCollection' collection.id %}">{{collection.name}}</a></li>
-        {% if collection.link %}
-            {% for collection.link in collection_list %}
-            <a href={{collection.link.hyperlink}}>{{collection.link.website_name}}</a>
-            {% endfor %}
-        {% endif %}
+        <a href="{% url 'detailCollection' collection.id %}">{{collection.name}}</a>
         {% endfor %}
-    </ul>
-    {% endif %}    
-<li><a href="{% url 'createCollection' %}" >{% trans "New Collection" %}</a></li>
+    </div>
+    {% endif %}
+{% else %}
+<div class="form-page">
+    <a class="option" href="{% url 'login' %}">{% trans "Log in" %}</a>
+    <a class="option" href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>
+</div>
 {% endif %}
 {% endblock %}

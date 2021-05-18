@@ -14,20 +14,21 @@
     {% block header %}
     {% if user.is_authenticated %}
         
-        <a href="{% url 'home' %}">{% trans "Home" %}</a>
-        (<a href="{% url 'logout' %}">{% trans "Log out" %}</a> | 
-        <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>)
-        
-        {% if user.is_superuser %}
-        <a href="{% url 'admin:index' %}">admin panel</a>
-        {% endif %}
-        <br>
-        {% trans "Logged in" %}: {{ user.username }} 
-    {% else %}
-       <a href="{% url 'login' %}">{% trans "Log in" %}</a>
-       <a href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>
+        <div class="nav-bar">
+            <a class="hover" href="{% url 'home' %}">{% trans "Home" %}</a>
+            
+            <div class="dropdown">
+                <input class="toggle" type="checkbox" id="toggle_drop"/>
+                <label for="toggle_drop">{% trans "User" %}: {{ user.username }}</label>
+                <div class="dropdown-content">
+                    <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
+                    <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>
+                </div>
+            </div>
+        </div>
+
     {% endif %}
-    <hr />
+    <!-- <hr /> -->
     {% endblock %}
     </div>
     <div id="content">
@@ -36,7 +37,7 @@
 
     <div id="footer">
     {% block footer %}
-        <hr />
+    <!-- <hr /> -->
     {% endblock %}
     </div>
 </body>
