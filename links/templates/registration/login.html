@@ -13,5 +13,6 @@
 
 <p>{% trans "Forgot password" %}? <a href="{% url 'password_reset' %}">{% trans "Reset it" %}</a>!</p>
 <p>{% trans "Not member" %}? <a href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>!</p>
-<a href="{% provider_login_url "github" method="oauth2" %}">Log in with Github</a>
+<a href="{% provider_login_url "google" method="oauth2" %}">Sign in with Google</a>
+<a href="{% provider_login_url "github" method="oauth2" %}">Sign in with Github</a>
 {% endblock %}
