@@ -2,18 +2,19 @@
 {% load i18n %}
 
 {% block content %}
-
-<!-- If collection owner is the logged in user display form -->
-{% if user == collection.user %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
-
-<!-- If collection owner is not the logged in user display message -->
-{% else %}
-<strong>This is not your collection!</strong>
-
-{% endif %}
+<div class="form-page">
+    <!-- If collection owner is the logged in user display form -->
+    {% if user == collection.user %}
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+    
+    <!-- If collection owner is not the logged in user display message -->
+    {% else %}
+    <strong>This is not your collection!</strong>
+    
+    {% endif %}
+</div>
 
 {% endblock %}

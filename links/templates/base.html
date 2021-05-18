@@ -27,9 +27,6 @@
             </div>
         </div>
 
-    {% else %}
-       <a href="{% url 'login' %}">{% trans "Log in" %}</a>
-       <a href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>
     {% endif %}
     <!-- <hr /> -->
     {% endblock %}

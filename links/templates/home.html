@@ -11,9 +11,9 @@
         {% for link in link_list %}
             {% if forloop.counter <= 6 %}
             <div class="links-item" title="{{link.website_name}}">
-                <a href="#"><img src="{{ link.image.url }}" alt="{{link.website_name}}"></a>
-                <input class="toggle" type="checkbox" id="toggle_options"/>
-                <label class="option" for="toggle_options">{% trans "Options" %}</label>
+                <img src="{{ link.image.url }}" alt="{{link.website_name}}">
+                <input class="toggle" type="checkbox" id="toggle_options{{forloop.counter}}"/>
+                <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Options" %}</label>
                 <div class="option-grid">
                     <p class="section-title">{{link.website_name}}</p>
                     <a class="option" href={{link.hyperlink}}>{% trans "Visit Link" %}</a>
@@ -53,7 +53,7 @@
                         <input type="hidden" name="type" value="Enable">
                     </form>
                     {% endif %}
-                    <label class="option" for="toggle_options">{% trans "Exit" %}</label>
+                    <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Close Window" %}</label>
                 </div>
             </div>
             {% endif %}
@@ -73,6 +73,11 @@
         <a href="{% url 'detailCollection' collection.id %}">{{collection.name}}</a>
         {% endfor %}
     </div>
-    {% endif %}    
+    {% endif %}
+{% else %}
+<div class="form-page">
+    <a class="option" href="{% url 'login' %}">{% trans "Log in" %}</a>
+    <a class="option" href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>
+</div>
 {% endif %}
 {% endblock %}

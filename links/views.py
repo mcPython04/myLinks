@@ -58,7 +58,7 @@ def collectionPage(request, username, collection_name):
 
 
 def base(request):
-    return render(request, "base.html")
+    return render(request, "home.html")
 
 
 # comment

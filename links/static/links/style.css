@@ -6,6 +6,27 @@ body {
     padding: 0;
 }
 
+img {
+    height: 5em;
+    width: 5em;
+    padding: 1em;
+    border-radius: 32%;
+    transition: transform .2s;
+}
+
+img:hover {
+    -webkit-transform: scale(1.2); /* Safari 3-8 */
+    transform: scale(1.2);
+}
+
+form * {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    border-width: 0;
+}
+
 .nav-bar {
     display: flex;
     flex-direction: column;
@@ -76,20 +97,8 @@ body {
 
 .links-item {
     margin: auto;
+    position: relative;
     /* background-color: red; */
-}
-
-img {
-    height: 5em;
-    width: 5em;
-    padding: 1em;
-    border-radius: 32%;
-    transition: transform .2s;
-}
-
-img:hover {
-    -webkit-transform: scale(1.2); /* Safari 3-8 */
-    transform: scale(1.2);
 }
 
 .page-title {
@@ -111,33 +120,49 @@ img:hover {
 
 .option-grid {
     display: none;
-    position: absolute;
+    align-items: center;
+    justify-items: center;
+    grid-auto-flow: row;
+    position: fixed;
     background-color: darkgrey;
     padding: 0.25em;
+    margin: auto;
+    height: 65vh;
+    width: 80vw;
+    bottom: 10%;
+    left: 9%;
+    z-index: 1;
 }
 
-.option {
+.option, form input {
     display: block;
     margin: auto;
     margin-bottom: 0.2em;
     margin-top: 0.2em;
-    padding: 0.2em;
-    max-width: 33vw;
+    padding: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     background-color: whitesmoke;
     color: black;
-    border: 0.1em solid grey;
     text-decoration: none;
     text-align: center;
-    font-size: 0.75em;
+    font-size: 1em;
+}
+
+.links-item > .option {
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .option-grid .option {
-    margin-bottom: 0.2em;
-    margin-top: 0.2em;
-    padding: 0.2em;
+    max-width: 100vw;
+    width: 80vw;
+    margin: 0;
     background-color: whitesmoke;
     color: black;
-    border: 0.1em solid grey;
 }
 
 .toggle:checked + label ~ .option-grid {
@@ -151,4 +176,20 @@ img:hover {
     padding: 1em;
     align-content: center;
     justify-content: center;
+}
+
+.form-page {
+    margin: auto;
+    text-align: center;
+    padding: 1em;
+}
+
+.form-page .option {
+    margin-top: 1em;
+}
+
+.helptext {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
