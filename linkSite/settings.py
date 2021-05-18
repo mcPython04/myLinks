@@ -136,6 +136,8 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 
 def requests_filter(record):
+    print(record.args)
+    print()
     if type(record.args) is tuple:
         if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
             return False
@@ -143,6 +145,7 @@ def requests_filter(record):
 
 
 def request_filter2(record):
+    print(record.args)
     if type(record.args) is tuple:
         if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
             return True
@@ -179,7 +182,7 @@ LOGGING = {
 
         'request_file': {
             'level': 'INFO',
-            'filters':['requests_filter2'],
+            'filters': ['requests_filter2'],
             'class': 'logging.FileHandler',
             'filename': './logs/myLinks_http.log',
             'formatter': 'simple',

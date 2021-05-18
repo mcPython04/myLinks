@@ -12,8 +12,14 @@ from django.db import IntegrityError
 import logging
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.dispatch import receiver
+from pythonjsonlogger import jsonlogger
 
 logger = logging.getLogger('django')
+logger1 = logging.getLogger()
+logHandler = logging.FileHandler(filename='./logs/myLink.json')
+formatter = jsonlogger.JsonFormatter(timestamp='server_time')
+logHandler.setFormatter(formatter)
+logger1.addHandler(logHandler)
 
 
 @receiver(user_logged_in)
