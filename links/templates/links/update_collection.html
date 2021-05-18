@@ -7,7 +7,7 @@
     {% if user == collection.user %}
     <form method="post">{% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Save">
+        <input class="option" type="submit" value="Save">
     </form>
     
     <!-- If collection owner is not the logged in user display message -->

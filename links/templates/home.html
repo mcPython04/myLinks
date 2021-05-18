@@ -73,6 +73,10 @@
         <a href="{% url 'detailCollection' collection.id %}">{{collection.name}}</a>
         {% endfor %}
     </div>
+    {% else %}
+        <p class="section-title">{% trans "No collections" %}</p>
+        <br>
+        <br>
     {% endif %}
 {% else %}
 <div class="form-page">

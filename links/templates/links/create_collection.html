@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
 <!-- If catches error, display message -->
 {% if messages %}
 <ul class="messages">
@@ -10,6 +14,7 @@
 <div class="form-page">
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Create">
+        <input class="option" type="submit" value="Create">
     </form>
 </div>
+{% endblock %}

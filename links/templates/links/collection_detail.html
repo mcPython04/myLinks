@@ -8,7 +8,9 @@
         <div class="links-grid">
         {% for link in collection.links.all%}
             <div class="links-item" title="{{link.website_name}}">
-                <a href={{link.hyperlink}}><img src="{{ link.image.url }}" alt="{{link.website_name}}"></a>
+                <img src="{{ link.image.url }}" alt="{{link.website_name}}">
+                <input class="toggle" type="checkbox" id="toggle_options{{forloop.counter}}"/>
+                <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Options" %}</label>
                 <div class="option-grid">
                     <a class="option" href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
                     <a class="option" href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
@@ -46,6 +48,7 @@
                         <input type="hidden" name="type" value="Enable">
                     </form>
                     {% endif %}
+                    <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Close Window" %}</label>
                 </div>
             </div>
         {% endfor %}
@@ -58,8 +61,8 @@
     {% endif %}
 
     <!-- Click on links to update or delete collection -->
-    <a href="{% url 'updateCollection' collection.pk %}"><button type = "button">Update Collection</button></a>
-    <a href="{% url 'deleteCollection' collection.pk %}"><button type = "button">Delete Collection</button></a>
+    <a class="option" href="{% url 'updateCollection' collection.pk %}">Update Collection</a>
+    <a class="option" href="{% url 'deleteCollection' collection.pk %}">Delete Collection</a>
 
 <!-- If the collection owner is not the logged in user display this message -->
 {% else %}

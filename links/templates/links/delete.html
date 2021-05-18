@@ -1,6 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
 <div class="form-page">
     <form method="post">{% csrf_token %}
         <p>Are you sure you want to delete the link "{{ object }}"?</p>
-        <input type="submit" value="Confirm">
+        <input class="option" type="submit" value="Confirm">
     </form>
 </div>
+{% endblock %}

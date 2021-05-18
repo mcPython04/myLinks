@@ -1,6 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
 <div class="form-page">
     <form method="post">{% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Save">
+        <input class="option" type="submit" value="Save">
     </form>
 </div>
+{% endblock %}
