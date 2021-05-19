@@ -34,8 +34,9 @@ def userPage(request, username):
         else:
             link_list = link.objects.filter(user__username=username)
             template = loader.get_template('user_page.html')
+            collection_list = collection.objects.filter(user__username=username)
             context = {
-                'link_list' : link_list,'username' : username
+                'link_list' : link_list,'username' : username, 'collection_list' : collection_list
             }
             return HttpResponse(template.render(context, request))
     else:

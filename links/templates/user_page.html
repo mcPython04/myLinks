@@ -17,5 +17,16 @@
     <br>
     <p class="section-title">{% trans "No links" %}</p>
 {% endif %}
-
+<p class="section-title">Collections:</p>
+{% if collection_list %}
+<div class="collection-box">
+    {% for collection in collection_list %}
+    <a href="{% url 'collectionPage' collection.user collection.name %}">{{collection.name}}</a>
+    {% endfor %}
+</div>
+{% else %}
+    <p class="section-title">{% trans "No collections" %}</p>
+    <br>
+    <br>
+{% endif %}
 {% endblock %}
