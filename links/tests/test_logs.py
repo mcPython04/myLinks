@@ -12,11 +12,10 @@ def test_home_log(client, create_test_user, caplog):
     assert test_user.username + ' visited the home page' in caplog.text
 
 
-#AttributeError: 'NoneType' object has no attribute 'META'
-# @pytest.mark.django_db
-# def test_home_log_fail(client, create_test_user_with_password, caplog):
-#     test_user = create_test_user_with_password
-#     username = test_user.username
-#     client.login(username=username, password='test1234')
-#     assert 'login failed for: ' in caplog.text
-#     assert 'via ip: ' in caplog.text
+@pytest.mark.django_db
+def test_home_log_fail(client, create_test_user_with_password, caplog):
+    test_user = create_test_user_with_password
+    username = test_user.username
+    client.post('/accounts/login/', {'username': username, 'password': 'test1234'})
+    assert 'login failed for: ' in caplog.text
+    assert 'via ip: ' in caplog.text
