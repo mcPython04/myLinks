@@ -56,11 +56,13 @@ cover/
 *.pot
 
 # Django stuff:
-*.log
+logs/*
+!logs/.gitkeep
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media/
+
 
 # Flask stuff:
 instance/
@@ -140,3 +142,6 @@ cython_debug/
 
 #sqlite3
 db.sqlite3
+
+#environment variables
+env.py
