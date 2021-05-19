@@ -11,6 +11,12 @@ def create_test_user():
 
 
 @pytest.fixture()
+def create_test_user_with_password():
+    test_user = User.objects.create(username='test_user', password='test123')
+    return test_user
+
+
+@pytest.fixture()
 def create_test_link():
     test_user = User.objects.create_user('test_user2')
     test_link = link.objects.create(hyperlink='https://twitter.com',
