@@ -1,7 +1,10 @@
 import asyncio
 import time
 import os
-import env
+try:
+    import env
+except:
+    import env_example
 from nio import AsyncClient, MatrixRoom, RoomMessageText
 
 
