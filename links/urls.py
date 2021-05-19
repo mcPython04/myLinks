@@ -1,12 +1,13 @@
 from django.urls import path
 from . import views
 from django.conf.urls import include
-from links.views import base
+from links.views import base, home
 
 urlpatterns = [ 
     path('home', views.home, name='home'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('allauth.urls')),
     path('', views.home, name="base"),
     path('<str:username>', views.userPage, name="userPage"),
     path('links/update', views.linkUpdateView, name='updateLink'),

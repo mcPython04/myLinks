@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+try:
+    import env
+except:
+    import env_example
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,8 +42,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-#    'django_registration',
+    'django_registration',
     'links.apps.LinksConfig',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +80,14 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = 'linkSite.wsgi.application'
@@ -125,6 +145,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+SITE_ID = 2
+
 LOGIN_REDIRECT_URL = "home"
 
 LOGOUT_REDIRECT_URL = "base"
@@ -132,3 +154,69 @@ LOGOUT_REDIRECT_URL = "base"
 ACCOUNT_ACTIVATION_DAYS = 7
 
 #AUTH_USER_MODEL = 'links.User'
+
+
+def requests_filter(record):
+    if type(record.args) is tuple:
+        if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
+            return False
+    return True
+
+
+def request_filter2(record):
+    if type(record.args) is tuple:
+        if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
+            return True
+    return False
+
+
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'requests_filter': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': requests_filter
+        },
+        'requests_filter2': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': request_filter2
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'request_file'],
+            'level': 'INFO'
+        },
+
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'filters': ['requests_filter'],
+            'class': 'logging.FileHandler',
+            'filename': './logs/myLinks.log',
+            'formatter': 'simple',
+        },
+
+        'request_file': {
+            'level': 'INFO',
+            'filters': ['requests_filter2'],
+            'class': 'logging.FileHandler',
+            'filename': './logs/myLinks_http.log',
+            'formatter': 'simple',
+        }
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s %(message)s'
+        }
+    }
+}
+
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = 587
+EMAIL_USER_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@safelinks.app'

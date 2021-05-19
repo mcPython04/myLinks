@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load socialaccount %}
 
 {% block content %}
 <div class="form-page">
   <form method="post" action=".">
-    {% csrf_token %}
+    {% csrf_token %} 
     {{ form.as_p }}
+
     <input class="option" type="submit" value="{% trans 'Log in' %}" />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
-  
+
   <p>{% trans "Forgot password" %}? <a href="{% url 'password_reset' %}">{% trans "Reset it" %}</a>!</p>
   <p>{% trans "Not member" %}? <a href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>!</p>
+  <a href="{% provider_login_url "google" method="oauth2" %}">Sign in with Google</a>
+  <a href="{% provider_login_url "facebook" method="oauth2" %}">Facebook OAuth2</a>
+  <a href="{% provider_login_url "github" method="oauth2" %}">Sign in with Github</a>
 </div>
 {% endblock %}
