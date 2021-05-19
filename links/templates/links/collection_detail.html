@@ -12,42 +12,7 @@
                 <input class="toggle" type="checkbox" id="toggle_options{{forloop.counter}}"/>
                 <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Options" %}</label>
                 <div class="option-grid">
-                    <a class="option" href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
-                    <a class="option" href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
-                    {% if link.default %}
-                    <form action="{% url 'updateLink' %}" method="post">
-                        {% csrf_token %}
-                        <input class="option" type="submit" name="button" value="Remove Default">
-                        <input type="hidden" name="d_id" value={{link.id}}>
-                        <input type="hidden" name="set" value="Remove">
-                        <input type="hidden" name="type" value="Default">
-                    </form>
-                    {% else %}
-                    <form action="{% url 'updateLink' %}" method="post">
-                        {% csrf_token %}
-                        <input class="option" type="submit" name="button" value="Set Default">
-                        <input type="hidden" name="d_id" value={{link.id}}>
-                        <input type="hidden" name="set" value="Set">
-                        <input type="hidden" name="type" value="Default">
-                    </form>
-                    {% endif %}
-                    {% if link.enabled %}
-                    <form action="{% url 'updateLink' %}" method="post">
-                        {% csrf_token %}
-                        <input class="option" type="submit" name="button" value="Disable">
-                        <input type="hidden" name="d_id" value={{link.id}}>
-                        <input type="hidden" name="set" value="Disable">
-                        <input type="hidden" name="type" value="Enable">
-                    </form>
-                    {% else %}
-                    <form action="{% url 'updateLink' %}" method="post">
-                        {% csrf_token %}
-                        <input class="option" type="submit" name="button" value="Enable">
-                        <input type="hidden" name="d_id" value={{link.id}}>
-                        <input type="hidden" name="set" value="Set">
-                        <input type="hidden" name="type" value="Enable">
-                    </form>
-                    {% endif %}
+                    <a class="option" href="{% url 'removeLink' collection.id %}" >{% trans "Remove Link" %}</a>
                     <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Close Window" %}</label>
                 </div>
             </div>
