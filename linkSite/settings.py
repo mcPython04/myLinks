@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_registration',
     'links.apps.LinksConfig',
     'django.contrib.sites',
+    'static_links.apps.StaticLinksConfig',
 
     'allauth',
     'allauth.account',
