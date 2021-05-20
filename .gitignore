@@ -145,3 +145,6 @@ db.sqlite3
 
 #environment variables
 env.py
+
+#database
+data/
