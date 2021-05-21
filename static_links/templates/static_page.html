@@ -3,5 +3,7 @@
 
 {% block content %}
 {{ link.name }}
-{{ MEDIA_URL }}{{ link.file }}
+<br>
+<iframe src="{{ MEDIA_URL }}{{ link.file }}" height="850" width="1800"></iframe>
 {% endblock %}
+
