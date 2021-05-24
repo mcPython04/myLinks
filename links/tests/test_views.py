@@ -262,7 +262,7 @@ def test_collection_link_delete_view(client, create_test_collection):
     test_user = test_collection.user
     client.force_login(test_user)
     req = client.post(reverse('removeLink', kwargs={'pk': test_collection.id}),
-                      data={'link_id': test_collection.links.get(pk=1).id})
+                      data={'link_id': test_collection.links.all()[:1].get().id})
     assert req.status_code == 302
     assert test_collection.links.all().count() == 0
 

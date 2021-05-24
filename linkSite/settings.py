@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_registration',
     'links.apps.LinksConfig',
     'django.contrib.sites',
+    'static_links.apps.StaticLinksConfig',
 
     'allauth',
     'allauth.account',
@@ -98,11 +99,14 @@ WSGI_APPLICATION = 'linkSite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -145,7 +149,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-SITE_ID = 2
+SITE_ID = 3
 
 LOGIN_REDIRECT_URL = "home"
 
@@ -157,14 +161,14 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 
 def requests_filter(record):
-    if type(record.args) is tuple:
+    if len(record.args) > 2:
         if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
             return False
     return True
 
 
 def request_filter2(record):
-    if type(record.args) is tuple:
+    if len(record.args) > 2:
         if any('GET' in args for args in record.args) or any('POST' in args for args in record.args):
             return True
     return False

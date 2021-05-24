@@ -7,3 +7,5 @@ pytest-django==4.2.0
 pytest-cov==2.11.1
 python-json-logger==2.0.1
 matrix-nio==0.18.1
+psycopg2-binary>=2.8
+beautifulsoup4==4.9.3
