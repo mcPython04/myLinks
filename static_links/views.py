@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.views.generic import DetailView, ListView
-from django.db.models import Q
+from django.db.models import Q, Value
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
 
 # Create your views here.
 class StaticCreateView(CreateView):
@@ -50,7 +51,13 @@ class SearchResultsView(ListView):
     template_name = 'search_results.html'
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        object_list = StaticLink.objects.filter(Q(name__icontains=query) | Q(description__icontains=query) | Q(context__icontains=query))
+        vector = SearchVector('name', weight='A') + SearchVector('description', weight='B') + SearchVector('context', weight='C')
+        q = self.request.GET.get('q')
+        query = SearchQuery(q)
+        object_list = StaticLink.objects.annotate(rank=SearchRank(vector, query),
+                                                  similarity=TrigramSimilarity('name', q) +
+                                                             TrigramSimilarity('description', q) +
+                                                             TrigramSimilarity('context', q)).order_by('-rank').filter\
+                                                  (Q(rank__gte=0.1) | Q(similarity__gt=0.1))
         return object_list
 

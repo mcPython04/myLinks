@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'links.apps.LinksConfig',
     'django.contrib.sites',
     'static_links.apps.StaticLinksConfig',
+    'django.contrib.postgres',
 
     'allauth',
     'allauth.account',
