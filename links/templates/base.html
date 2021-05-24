@@ -17,7 +17,11 @@
         <a href="{% url 'home' %}">{% trans "Home" %}</a>
         (<a href="{% url 'logout' %}">{% trans "Log out" %}</a> | 
         <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>)
-        
+
+        <form action="{% url 'search_results' %}" method="get">
+        <input name="q" type="text" placeholder="Search...">
+        </form>
+
         {% if user.is_superuser %}
         <a href="{% url 'admin:index' %}">admin panel</a>
         {% endif %}

@@ -6,8 +6,8 @@ from django.db import IntegrityError
 from django.contrib import messages
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
-from django.views.generic import DetailView
-
+from django.views.generic import DetailView, ListView
+from django.db.models import Q
 
 # Create your views here.
 class StaticCreateView(CreateView):
@@ -43,3 +43,14 @@ def static_link_page(request, name):
             return HttpResponse(template.render(context, request))
     else:
         raise Http404("No Such Static Link Exists.")
+
+
+class SearchResultsView(ListView):
+    model = StaticLink
+    template_name = 'search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = StaticLink.objects.filter(Q(name__icontains=query) | Q(description__icontains=query) | Q(context__icontains=query))
+        return object_list
+
