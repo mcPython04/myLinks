@@ -20,5 +20,4 @@ urlpatterns = [
     path('collection/links/remove/<slug:pk>', views.collection_link_delete_view, name='removeLink'),
     path('collection/links/update/<slug:pk>', views.CollectionUpdateView.as_view(), name='updateCollection'),
     path('<str:username>/<str:collection_name>', views.collectionPage, name="collectionPage"),
-
 ]

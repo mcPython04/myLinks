@@ -145,3 +145,7 @@ db.sqlite3
 
 #environment variables
 env.py
+
+#database
+data/
+static_links/migrations/0001_initial.py

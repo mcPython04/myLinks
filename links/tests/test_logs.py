@@ -192,5 +192,5 @@ def test_log_collection_link_delete_view(client, create_test_collection, caplog)
     test_user = test_collection.user
     client.force_login(test_user)
     client.post(reverse('removeLink', kwargs={'pk': test_collection.id}),
-                        data={'link_id': test_collection.links.get(pk=1).id})
+                        data={'link_id': test_collection.links.all()[:1].get().id})
     assert test_user.username + ' removed a link from his/her collection' in caplog.text

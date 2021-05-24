@@ -5,23 +5,19 @@ pipeline {
         args '-u root --cap-add NET_ADMIN'
       }
     }
-    environment {
-      DISABLE_AUTH = 'true'
-      DB_ENGINE = 'sqlite'
-    }
 
     stages {
       stage('Build') {
         steps {
-          sh 'pip3 install -r requirements.txt'
+          sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+          sh 'chmod +x /usr/local/bin/docker-compose'
         }
       }
 
     stage('Testing') {
       steps {
-        sh 'pytest'
+        sh 'make test' 
       }
     }
-
   }
 }
