@@ -7,29 +7,44 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'links/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'links/images' %}">
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'links/UIscript.js' %}">-->
+
+    <script type="text/javascript" src="..//static/links/UIscript.js"></script>
+
+    <!--<label class="logo">SafeLinks</label>-->
+
 </head>
 
 <body>
+
     <div id="header">
     {% block header %}
     {% if user.is_authenticated %}
+
         
-        <div class="nav-bar">
-            <a class="hover" href="{% url 'home' %}">{% trans "Home" %}</a>
-            
-            <div class="dropdown">
-                <input class="toggle" type="checkbox" id="toggle_drop"/>
-                <label for="toggle_drop">{% trans "User" %}: {{ user.username }}</label>
-                <div class="dropdown-content">
-                    <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
-                    <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>
-                </div>
-            </div>
+        <div class="nav-bar" id="hamnav">
+            <a class="homebutton" href="{% url 'home' %}">{% trans "SafeLinks" %}</a>
+               <!-- <input class="toggle" type="checkbox" id="toggle_drop"/> 
+                <label<img id=DropButton for="toggle_drop" class="toprightbutton"src="../static/links/images/Hamburger.png"></label> -->
+                <label for="hamburger">&#9776;</label>
+                <input type="checkbox" id="hamburger"/>
+         <div class="dropdown-content" id="myDropdown">
+            <a class="toprightmenu" href="{% url 'userPage' user.username %}">{% trans "Username" %}: {{ user.username }}</a>
+            <a class="toprightmenu" href="{% url 'password_change' %}">{% trans "Change password" %}</a>
+            <a class="toprightmenulast" href="{% url 'logout' %}">{% trans "Log out" %}</a>
         </div>
+    
+    </div>
+           
+        
+        
+    </div>
 
     {% endif %}
     <!-- <hr /> -->
     {% endblock %}
+    
     </div>
     <div id="content">
     {% block content %}{% endblock %}
@@ -42,4 +57,4 @@
     </div>
 </body>
 
-</html>
+</html> 

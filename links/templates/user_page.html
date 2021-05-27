@@ -21,7 +21,7 @@
 {% if collection_list %}
 <div class="collection-box">
     {% for collection in collection_list %}
-    <a href="{% url 'collectionPage' collection.user collection.name %}">{{collection.name}}</a>
+    <a class="collection" href="{% url 'collectionPage' collection.user collection.name %}">{{collection.name}}</a>
     {% endfor %}
 </div>
 {% else %}

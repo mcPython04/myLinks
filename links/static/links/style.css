@@ -10,14 +10,14 @@ img {
     height: 5em;
     width: 5em;
     padding: 1em;
-    border-radius: 32%;
-    transition: transform .2s;
+    border-radius: 1em;
+    /*transition: transform .2s;*/
 }
 
-img:hover {
-    -webkit-transform: scale(1.2); /* Safari 3-8 */
+/*img:hover {
+    -webkit-transform: scale(1.2); /* Safari 3-8 
     transform: scale(1.2);
-}
+}*/
 
 form * {
     padding: 0;
@@ -28,47 +28,69 @@ form * {
 }
 
 .nav-bar {
-    display: flex;
-    flex-direction: column;
+    display:flex;
+    flex-direction: row;
     overflow: hidden;
     margin: 0;
     padding: 0;
-    padding-top: 0.6em;
-    padding-bottom: 0.6em;
+    padding-top: 0.01em;
+    padding-bottom: 0.01em;
     background-color: whitesmoke;
+    min-height: 4em;
 }
 
 .nav-bar * {
     display: block;
-    padding: 0.3em;
+    padding: 0.01m;
     text-align: center;
     text-decoration: none;
     color: black;
     /* border: 1ch solid black; */
+    position: sticky;
 }
 
 .dropdown {
     margin: 0;
     padding: 0;
+    display:inline-block;
+    position: relative;
 }
+
 
 .dropdown-content {
     display: none;
     z-index: 1;
-    position: absolute;
+    position:inherit;
     width: 100%;
     margin: 0;
     padding: 0;
-    padding-bottom: 0.3em;
+    padding-bottom: 0em;
     background-color: whitesmoke;
 }
 
-.toggle {
-    display: none;
+#hamnav label { 
+    display: flex; 
+    color: black;
+    background: whitesmoke;
+    font-style: normal;
+    font-size: 2em;
+    padding: 0.5em;
+    position: relative;
+
+  }
+
+#hamburger{
+    display:none;
 }
 
-.toggle:checked + label ~ .dropdown-content {
+#myDropdown{
+    display:none;
+    margin-top:4.2em;
+}
+
+#hamnav input:checked ~ #myDropdown{
     display: block;
+    position:absolute;
 }
 
 /* .hover {
@@ -99,14 +121,18 @@ form * {
     margin: auto;
     position: relative;
     /* background-color: red; */
+    border-radius: 2em;
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
+    box-shadow: 0em 0em 0.5em lightgray;
+    padding:0.25em;
 }
 
 .page-title {
     text-align: center;
     font-size: 1.5em;
     font-weight: bolder;
-    margin: 0.25em;
-    padding: 0.25em;
+    margin: 1em;
 }
 
 .section-title {
@@ -114,7 +140,7 @@ form * {
     font-size: 1.25em;
     font-weight: bold;
     margin: 0.25em;
-    padding: 0.25em;
+    padding: 0.5em;
     /* text-decoration: underline; */
 }
 
@@ -124,17 +150,19 @@ form * {
     justify-items: center;
     grid-auto-flow: row;
     position: fixed;
-    background-color: darkgrey;
-    padding: 0.25em;
+    background-color: whitesmoke;
+    padding: 0em;
     margin: auto;
     height: 65vh;
     width: 80vw;
     bottom: 10%;
     left: 9%;
     z-index: 1;
+    border: 2px solid black;
+    border-radius: 1em;
 }
 
-.option, form input {
+.option, form input, .button, .homebutton , .toprightbutton, .toprightmenu ,.toprightmenulast, .collection{
     display: block;
     margin: auto;
     margin-bottom: 0.2em;
@@ -149,12 +177,18 @@ form * {
     font-size: 1em;
 }
 
+.option:active + .logo {
+    display:none;
+}
+
 .links-item > .option {
-    position: absolute;
+    position: relative;
     margin: auto;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, 0);
+    /*transform: translate(-50%, 0);*/
+    margin-bottom: 0;
+    
 }
 
 .option-grid .option {
@@ -171,11 +205,12 @@ form * {
 
 .collection-box {
     /* background-color: red; */
-    display: flex;
+    display: block;
     margin: auto;
     padding: 1em;
     align-content: center;
     justify-content: center;
+    margin-bottom: 2em;
 }
 
 .form-page {
@@ -192,4 +227,72 @@ form * {
     display: block;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+}
+
+.button, .collection{
+  padding-left: 1em;
+  padding-right: 1em;
+  /* margin: 0em 1em 0em 1em; */
+  /*border: 2px solid black;*/
+  border-radius: 1em;
+  align-items: center;
+  box-shadow: 0em 0em 0.5em lightgrey;
+  margin-top: 1em;
+}
+
+.button:hover{
+    background-color: white;
+}
+
+.homebutton {
+    font-size: 2em;
+    margin-left: 0.5em;
+    margin-top: 0em;
+    margin-bottom: 0.01em;
+    font-style: italic;
+}
+
+.homebutton:hover{
+    font-weight: bold;
+}
+
+.toprightbutton {
+    margin-top: 0.7em;
+    margin-right: 1em;
+    width: 2em;
+    height: 2em;
+    border:2px solid black;
+    padding:0.3em;
+    cursor: pointer;
+}
+
+.toprightmenu{
+    padding-left: 0.2em;
+    padding-right:0.3em;
+    /*border-right: 0.5em solid lightgray;
+    border-left: 0.5em solid lightgray;*/
+    border-bottom: 0.1em solid lightgray;
+
+}
+
+.toprightmenulast{
+    padding-left: 0.2em;
+    padding-right:0.3em;
+}
+
+.toprightbutton:hover{
+    background-color: white;
+}
+
+.collection{
+    margin-bottom: 1em;
+    width:50%;
+    font-size: 1.2em;
+}
+
+.logo{
+    font-size: 3em;
+    font-style: italic;
+    margin: 1em;
+
 }

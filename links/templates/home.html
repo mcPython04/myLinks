@@ -4,25 +4,25 @@
 {% block content %}
 {% if user.is_authenticated %}
 <p class="page-title">{{ user.username }}'s {% trans "Home Page" %}</p>
+<a class="button" href="{% url 'createLink'%}" >{% trans "+ Add New Link" %}</a>
 <p class="section-title">Links:</p>
-<a class="option" href="{% url 'createLink'%}" >{% trans "Add New Link" %}</a>
     {% if link_list %}
-        <div class="links-grid">
+        <div class="links-grid" class="button">
         {% for link in link_list %}
             {% if forloop.counter <= 6 %}
             <div class="links-item" title="{{link.website_name}}">
                 <img src="{{ link.image.url }}" alt="{{link.website_name}}">
                 <input class="toggle" type="checkbox" id="toggle_options{{forloop.counter}}"/>
-                <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Options" %}</label>
+                <label class="button" for="toggle_options{{forloop.counter}}">{% trans "Options" %}</label>
                 <div class="option-grid">
                     <p class="section-title">{{link.website_name}}</p>
-                    <a class="option" href={{link.hyperlink}}>{% trans "Visit Link" %}</a>
-                    <a class="option" href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
-                    <a class="option" href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
+                    <a class="button" href={{link.hyperlink}}>{% trans "Visit Link" %}</a>
+                    <a class="button" href="{% url 'deleteLink' link.id %}" >{% trans "Remove Link" %}</a>
+                    <a class="button" href="{% url 'uploadLink' link.id %}" >{% trans "Change Image" %}</a>
                     {% if link.default %}
                     <form action="{% url 'updateLink' %}" method="post">
                         {% csrf_token %}
-                        <input class="option" type="submit" name="button" value="Remove Default">
+                        <input class="button" type="submit" name="button" value="Remove Default">
                         <input type="hidden" name="d_id" value={{link.id}}>
                         <input type="hidden" name="set" value="Remove">
                         <input type="hidden" name="type" value="Default">
@@ -30,7 +30,7 @@
                     {% else %}
                     <form action="{% url 'updateLink' %}" method="post">
                         {% csrf_token %}
-                        <input class="option" type="submit" name="button" value="Set Default">
+                        <input class="button" type="submit" name="button" value="Set Default">
                         <input type="hidden" name="d_id" value={{link.id}}>
                         <input type="hidden" name="set" value="Set">
                         <input type="hidden" name="type" value="Default">
@@ -39,7 +39,7 @@
                     {% if link.enabled %}
                     <form action="{% url 'updateLink' %}" method="post">
                         {% csrf_token %}
-                        <input class="option" type="submit" name="button" value="Disable">
+                        <input class="button" type="submit" name="button" value="Disable">
                         <input type="hidden" name="d_id" value={{link.id}}>
                         <input type="hidden" name="set" value="Disable">
                         <input type="hidden" name="type" value="Enable">
@@ -47,13 +47,13 @@
                     {% else %}
                     <form action="{% url 'updateLink' %}" method="post">
                         {% csrf_token %}
-                        <input class="option" type="submit" name="button" value="Enable">
+                        <input class="button" type="submit" name="button" value="Enable">
                         <input type="hidden" name="d_id" value={{link.id}}>
                         <input type="hidden" name="set" value="Set">
                         <input type="hidden" name="type" value="Enable">
                     </form>
                     {% endif %}
-                    <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Close Window" %}</label>
+                    <label class="button" for="toggle_options{{forloop.counter}}">{% trans "Back" %}</label>
                 </div>
             </div>
             {% endif %}
@@ -65,12 +65,13 @@
         <br>
     {% endif %}
 <br>
+
+<a class="button" href="{% url 'createCollection' %}" >{% trans "+ Add New Collection" %}</a>
 <p class="section-title">Collections:</p>
-<a class="option" href="{% url 'createCollection' %}" >{% trans "New Collection" %}</a>
     {% if collection_list %}
     <div class="collection-box">
         {% for collection in collection_list %}
-        <a href="{% url 'detailCollection' collection.id %}">{{collection.name}}</a>
+        <a class="collection" href="{% url 'detailCollection' collection.id %}">{{collection.name}}</a>
         {% endfor %}
     </div>
     {% else %}
@@ -80,8 +81,8 @@
     {% endif %}
 {% else %}
 <div class="form-page">
-    <a class="option" href="{% url 'login' %}">{% trans "Log in" %}</a>
-    <a class="option" href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>
+    <a class="button" href="{% url 'login' %}">{% trans "Log in" %}</a>
+    <a class="button" href="{% url 'django_registration_register' %}">{% trans "Register" %}</a>
 </div>
 {% endif %}
 {% endblock %}

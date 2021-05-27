@@ -10,10 +10,10 @@
             <div class="links-item" title="{{link.website_name}}">
                 <img src="{{ link.image.url }}" alt="{{link.website_name}}">
                 <input class="toggle" type="checkbox" id="toggle_options{{forloop.counter}}"/>
-                <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Options" %}</label>
+                <label class="button" for="toggle_options{{forloop.counter}}">{% trans "Options" %}</label>
                 <div class="option-grid">
-                    <a class="option" href="{% url 'removeLink' collection.id %}" >{% trans "Remove Link" %}</a>
-                    <label class="option" for="toggle_options{{forloop.counter}}">{% trans "Close Window" %}</label>
+                    <a class="button" href="{% url 'removeLink' collection.id %}" >{% trans "Remove Link" %}</a>
+                    <label class="button" for="toggle_options{{forloop.counter}}">{% trans "Close Window" %}</label>
                 </div>
             </div>
         {% endfor %}
@@ -26,8 +26,10 @@
     {% endif %}
 
     <!-- Click on links to update or delete collection -->
-    <a class="option" href="{% url 'updateCollection' collection.pk %}">Update Collection</a>
-    <a class="option" href="{% url 'deleteCollection' collection.pk %}">Delete Collection</a>
+    <a class="button" href="{% url 'updateCollection' collection.pk %}">Update Collection</a>
+    <a class="button" href="{% url 'deleteCollection' collection.pk %}">Delete Collection</a>
+    <a class="button" href="{% url 'home' %}">Back</a>
+
 
 <!-- If the collection owner is not the logged in user display this message -->
 {% else %}
